@@ -27,3 +27,11 @@ Advantages:
   - downloaded only once per computer
   - offline access
   - fast
+  - easy to port to other platforms (releases provide target)
+  - can use any hosting service, e.g. could upload to figshare
+
+Possible extensions:
+
+  -  automate uploading of new releases with commit hooks, e.g. via Travis CI
+  
+  -  
