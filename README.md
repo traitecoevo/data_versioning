@@ -13,7 +13,7 @@ Alternative is to wrap the data with an API
   - hard to download *all* the data
   - hard to use offline (though things like [vcr](https://github.com/vcr/vcr) might help)
   - can be slow, especially in Australia
-  - requires a lot of effort to set up
+  - requires a lot of effort (and money) to set up
 
 ## Our approach
 
@@ -29,6 +29,7 @@ Advantages:
   - fast
   - easy to port to other platforms (releases provide target)
   - can use any hosting service, e.g. could upload to figshare
+  - doi when desired (i.e. when it's used for a publication)
 
 Possible extensions:
 
