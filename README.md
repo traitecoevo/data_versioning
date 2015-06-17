@@ -29,10 +29,12 @@ The data is downloaded only once per computer, available for offline access, eas
 
 So far we have three:
 
-1. `BAAD`
+1. `Biomass And Allometry Database`
 2. `taxonlookup`
 3. `plantgrowthform`
 
 Each of these is a versioned dataset, designed for a particular research goal, and also explicitly flexible such that they can grow in the future.  In all three cases, the user needs to install a few `R` packages.  The data versions themselve is stored as a Github Releases (as well as if desired on DataDryad or FigShare), then any of the versions of the data can be downloaded and used with one line of `R` code.  
+
+## Conclusion
 
 Because it builds on existing infra-structure for distributing software, this system requires very little (or no) money to set up and only a small amount of programming expertise.  It will not work for big or continually updated data (e.g. weather stations or satelite downloads), but for a set of problems that need "living" small-to-medium sized data, this might be a useful approach.  
