@@ -19,13 +19,13 @@ Each of those questions might be the captured in a dataset that could be one lab
 
 So what we need in this case is a low-cost (both money and time) way of making versions of a dataset and delivering it to potential users, along with notes on what has changed and why since the previous version.  Periodically versions can be desposited and given a digital obeject identifier (DOI) at a major research archive, but in between major versions, small changes can be made, errors can be corrected, and the most recent version can be distributed to users.  
 
-*How do you provide data to users?*
+## How do you provide data to R users?
 
 There are a number of high-setup-cost options (stand-alone packages, APIs), which have advantages if you have the resources to develop and maintain them.  We wanted a relatively low cost way (both in money and time).  Our approach builds on the theory of "semantic versioning" developed for software distribution.   It uses github releases, semantic versioning, and local caching.
 
 The data is downloaded only once per computer, available for offline access, easy to port to other platforms, and can get a doi when desired (i.e. when it's used for a publication).
 
-*Some worked examples*
+## Some worked examples
 
 So far we have three:
 
