@@ -48,7 +48,7 @@ With those two skills the rest should be relatively easy.  To set up a living da
 2. A single file that will be the versioned dataset (e.g. `plant_lookup.csv` or `baad_data.zip`).  
 3. A function to load that data into R: (e.g. a simple wrapper around `read.csv`).  
 
-Then as the data changes (hopefully improves) with time, update the data file and create a github release with a new version number (perferably using sematic versioning (http://semver.org/)).  All the versions will be availble to the user.  And versions can be given a unique DOI when appropriate, e.g. when they are used in a publication.  
+Then as the data changes (hopefully improves) with time, update the data file and create a github release with a new version number (perferably using [sematic versioning](http://semver.org/)).  All the versions will be availble to the user.  And versions can be given a unique DOI when appropriate, e.g. when they are used in a publication.  
 
 ## Conclusion
 
