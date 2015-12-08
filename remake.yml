@@ -1,0 +1,13 @@
+packages:
+  - callr
+
+sources:
+  - R
+
+targets:
+  all:
+    depends:
+      - ms.pdf
+
+  ms.pdf:
+    command: latex_build_clean("ms.tex", "refs.bib")
