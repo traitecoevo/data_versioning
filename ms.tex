@@ -4,16 +4,19 @@
 \usepackage[]{natbib}
 \raggedright
 
-\newcommand{\livingdata}{\texttt{living\_data}}
+\newcommand{\datastorr}{\texttt{datastorr}}
 \newcommand{\smurl}[1]{{\footnotesize\url{#1}}}
 \usepackage{graphicx}
 
-\title{{\livingdata}: A package for distributing dynamic and versioned
+\title{{\datastorr}: A package for distributing dynamic and versioned
 data}
-\author{Richard G. FitzJohn$^1$, and fans$^2$}
+\author{Richard G. FitzJohn$^1$, Daniel S. Falster$^2$, Matthew
+  W. Pennell$^3$, and William K. Cornwells$^4$}
 \affiliation{
 $^1$ Somewhere in the UK\\
 $^2$ Everywhere else\\
+$^3$ Department of Zoology and Biodiversity Research Centre,
+University of British Columbia, Vancouver, B.C. V6T 1Z4 Canada\\
 
 }
 \date{}
@@ -23,7 +26,7 @@ $^2$ Everywhere else\\
 \usepackage[title,titletoc,toc]{appendix}
 
 \mstype{Applications Note}
-\runninghead{The {\livingdata} package}
+\runninghead{The {\datastorr} package}
 \keywords{}
 
 \begin{document}
@@ -42,38 +45,9 @@ $^2$ Everywhere else\\
 
 \subsection{Introduction}
 
-In recent years the idea of the data publication has become established
-across many different scientific disciplines. Researchers can publish
-the data associated with a publication (or even not associated with a
-publication) in one of a number of open access locations, such as the
-Dryad Data Repository, Figshare, or (less ideally) as supplementary
-files to the original publication. These stable data then are freely and
-easily available. Researchers get credit for the production (or
-assembly) of that data, and the model facilitates future, creative uses
-by the research community. As this new model has taken hold, one new
-problem that has emerged: many of the most useful datasets are often not
-as static as we once throught they were. The static model works very
-well for reproducing a \emph{particular} analysis in a \emph{particular}
-paper, which is crucial and important for reproducibility.
-{[}\textbf{MWP}: I think we should highlight the fact that there is a
-range of types of data from one-off studies of a single population at a
-single time (where Dryad is a perfectly suitable option) to large
-databases (think GenBank) that require expert database management, good
-APIs, etc. I think this approach fills a niche somewhere in the middle.
-I realize this is mentioned below but think this would perhaps be useful
-upfront to set the scope of the problem we want to address.{]}
+Data is quickly becoming a first-class scientific product. Funding bodies, publishers, and scientific social norms are increasingly both requiring data to be published alongside research publications and recognizing the value of producing and sharing data for its own sake. This has been a rapid, and exciting, sea change and we as a community are still catching up and trying to discern how best to disseminate data and credit data creators and aggregators. One thing that is clear is that there is not a one-size-fits-all solution to this problem as data is incredibly heterogeneous. On one end of the spectrum are massive, centralized repositories that are constantly being added to; this is a great solution to storing and distributing relatively standardized data such as sequences (e.g., \texttt{GenBank}, \texttt{SRA}). On the other end are repositories for storing a wide variety of static, stand-alone datasets (\texttt{Dryad}, \texttt{Figshare}, and less optimally, as supplements to research papers. The static model works very well for reproducing a \emph{particular} analysis in a \emph{particular} paper, which is crucial and important for reproducibility. While both of these classes of data are well-served by current infrastructure, we argue that there is a middle ground that does not fit either of these paradigms very well.
 
-From a scientific discovery perspective, however, this is not the most
-useful model. Many, although not all, of the most useful datasets are
-snapshots of existing quantitative knowledge at a given time. For
-example, meta-analyses are built on the existing data for a given
-question at a given time. When a new study is published the static
-dataset from the last meta-analysis immediately becomes obsolete--to
-keep up-to-date that new study should be added. However, if we have a
-static data distribution system, this is impossible. Another problem
-with the static model is the discovery of small errors. For any much
-medium-sized database that is repeatedly used, errors will be found, and
-there needs to be some organized way to correct them.
+Consider the case of the data from an ecological meta-analysis. It is only a snapshot of our existing knowledge at a given time. When a new study is published the static dataset from the last meta-analysis immediately becomes obsolete --- to keep up-to-date that new study should be added. However, if we have a static data distribution system, this is impossible. Another problem with the static model is the discovery of small errors. For any much medium-sized database that is repeatedly used, errors will be found, and there needs to be some organized way to correct them. And while a centralized GenBank-esque repository would be useful for updating or adding to the data from this meta-analysis, the infrastructure investment (designing maintaining, and hosting the database) is clearly overkill for most projects and is a very substantial barrier to entry.
 
 \subsection{Versioning data}
 
