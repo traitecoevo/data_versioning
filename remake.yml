@@ -1,5 +1,4 @@
 packages:
-  - callr
 
 sources:
   - R
