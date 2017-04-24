@@ -175,6 +175,8 @@ So far we have three:
 \def\labelenumi{\arabic{enumi}.}
 \itemsep1pt\parskip0pt\parsep0pt
 \item
+  \texttt{coraltraits}
+\item
   \texttt{Biomass And Allometry Database} \citep{Falster-2015}
 \item
   \texttt{taxonlookup} \citep{Pennell-2015a}
@@ -233,26 +235,29 @@ this might be a useful approach.
 
 \begin{table}[h!]
 \centering
-\caption{Alternative frameworks for managing a living database}
+\caption{Alternative frameworks for setting up and managing a living database}
 {\footnotesize
 \vspace{1cm}
-  \begin{tabular}{p{5cm}p{5cm}p{5cm}}
+  \begin{tabular}{p{2.5cm}p{3.5cm}p{3.5cm}p{4cm}}
   \hline
-  \textbf{Feature} & \textbf{Traditional web database} & \textbf{Lightweight versioned data}\\ \hline
-   Data storage     & SQL           &  git       \\
-   Webserver        & custom        &  Maintained by github.com\\
-   Frontend         & Ruby on rails &  datastorr \\
-   Ease of setup    & Easy          & Moderate \\ % server, backups, bandwidth
-   Data size        & Small-Very large & Up to 1Gb\\
-   Cost             & Ongoing       & Free \\
-   Bandwidth        & Pro rata      & Managed by github.com\\
-   Maintainer skills& Ruby, php     & R, git \\
-   User skills      & Web           & R \\
-   Versioning       & Hard          & Easy \\
-   DOI minting      & Manual        & Automatic \\
+  \textbf{Feature} & \textbf{Static data}& \textbf{Web database} & \textbf{Lightweight versioned data}\\ 
   \hline
+   Webserver        & dataDryad or others & custom                          &  Maintained by github.com\\
+   Backend          & none & SQL + Ruby-on-rails 			& git + datastorr \\
+   User access      & Web browser & Web browser 				    & R \\
+   Ease of setup    & Very easy & Moderate 							& Easy\\ % server, backups, bandwidth
+   Data size        &Up to several Gb & Small-Very large 				& Up to 1Gb\\
+   Cost             &Varies & Varies  						& Free \\
+   Bandwidth        &managed by dataDryad & Pro rata 						& Managed by github.com\\
+   Maintainer skills &none & Ruby + php 					& R + git \\
+   User skills      &Web browsing& Web browsing  					& basic R \\
+   Versioning       &None& Hard 							& Easy \\
+   DOI minting      &Automatic & Many steps 					& Automatic \\
+  \hline 
+  \\
+ 
   \end{tabular}
-  }
+  } 
 \label{tab:sql_v_versioneddata}
 \end{table}
 
@@ -271,6 +276,8 @@ this might be a useful approach.
    R     &  Open source statsitcial and data processing language. \\
    CRAN  &  Open source repository of packages for the R language \\
    datastorr & R package used to fetch github releases. \\
+   DOI & Digital object identifier, which refers a user to a single stable digital object \\ 
+   DOI ``minting'' & creation of DOI's \\
    \hline
   \end{tabular}
   }
@@ -290,15 +297,16 @@ this might be a useful approach.
   Maintainer & Create and distribute versioned datasets & Low technical overhead \\
     & & Easy workflow for releasing new versions \\
     & & Long term preservation \\
-    & & Easy to crowd-source contributions \\
-    & & Low cost \\
-    & & Low maintenance \\
+    & & Easy to crowd-source error checking and contributions \\
+    & & Low initial cost \\
+    & & Low on-going maintenance \\
   Contributor & Contribute to future versions & Add new data \\
     & & Report errors in existing data  \\
   Users (all) & Easy access to releases & Introduction \& overview \\
     & & Long term stability \\
-    & & Clear path for user to become contributor \\
-  Users (computational, machines) & Scripted access to releases & Easy installation\\
+    & & Clear path for users to become contributors \\
+  Users (computational, machines) & Build reproducible products on these data & Scripted access to releases\\
+    & &Easy installation\\
     & & Long term stability \\
   \hline
   \end{tabular}
