@@ -11,10 +11,11 @@
 \title{{\datastorr}: A package for distributing dynamic and versioned
 data}
 \author{Richard G. FitzJohn$^1$, Daniel S. Falster$^2$, Matthew
-  W. Pennell$^3$, and William K. Cornwells$^4$}
+  W. Pennell$^3$, and William K. Cornwell$^2$}
 \affiliation{
 $^1$ Somewhere in the UK\\
-$^2$ Everywhere else\\
+$^2$ Evolution \& Ecology Research Centre, School of Biological, Earth and Environmental Sciences,
+University of New South Wales, Sydney, NSW 2052, Australia\\
 $^3$ Department of Zoology and Biodiversity Research Centre,
 University of British Columbia, Vancouver, B.C. V6T 1Z4 Canada\\
 
@@ -42,6 +43,21 @@ University of British Columbia, Vancouver, B.C. V6T 1Z4 Canada\\
 \itemsep1pt\parskip0pt\parsep0pt
 \item Data is cool
 \end{enumerate}
+
+\section{Overview}
+
+Main aims of paper:
+
+\begin{enumerate}
+  \item Recognise need for versioned datasets
+  \item Provide workflow / infrastructure for people to distribute and access small-medium sized data with minimal setup and cost, by leveraging emerging technologies
+\end{enumerate}
+
+
+% Access point might change, e.g. github goes out of business
+
+% Workflows for dataset assembly: One or two packages? More complex like baad has two packages. Taxonlookup is all in one
+% Licensnes? Currently using MIT (taxonlookup), BSD\_2 (baad.data)
 
 \subsection{Introduction}
 
@@ -212,6 +228,111 @@ not work for big or continually updated data (e.g.~weather stations or
 satellite downloads). For a set of problems that need periodically
 updated small-to-medium sized data (e.g.~most meta-analysis problems),
 this might be a useful approach.
+
+\section{Table}
+
+\begin{table}[h!]
+\centering
+\caption{Alternative frameworks for managing a living database}
+{\footnotesize
+\vspace{1cm}
+  \begin{tabular}{p{5cm}p{5cm}p{5cm}}
+  \hline
+  \textbf{Feature} & \textbf{Traditional web database} & \textbf{Lightweight versioned data}\\ \hline
+   Data storage     & SQL           &  git       \\
+   Webserver        & custom        &  Maintained by github.com\\
+   Frontend         & Ruby on rails &  datastorr \\
+   Ease of setup    & Easy          & Moderate \\ % server, backups, bandwidth
+   Data size        & Small-Very large & Up to 1Gb\\
+   Cost             & Ongoing       & Free \\
+   Bandwidth        & Pro rata      & Managed by github.com\\
+   Maintainer skills& Ruby, php     & R, git \\
+   User skills      & Web           & R \\
+   Versioning       & Hard          & Easy \\
+   DOI minting      & Manual        & Automatic \\
+  \hline
+  \end{tabular}
+  }
+\label{tab:sql_v_versioneddata}
+\end{table}
+
+\newpage
+
+\begin{table}[h!]
+\centering
+\caption{Main technologies leveraged to store and distribute "Lightweight versioned data".}
+{\footnotesize
+\vspace{1cm}
+  \begin{tabular}{p{5cm}p{10cm}}
+  \hline
+  \textbf{Technology} & \textbf{Description} \\\hline
+   git & Open source version control system used for tracking progressive changes in a set of text files, typically computer code but also data\\
+   github.com & A commercial webplatform for sharing, visualising and managing `git' repositories. Includes issue tracking.\\
+   R     &  Open source statsitcial and data processing language. \\
+   CRAN  &  Open source repository of packages for the R language \\
+   datastorr & R package used to fetch github releases. \\
+   \hline
+  \end{tabular}
+  }
+\label{tab:technologies}
+\end{table}
+
+\newpage
+
+\begin{table}[h!]
+\centering
+\caption{Groups of users and their requirements}
+{\footnotesize
+\vspace{1cm}
+  \begin{tabular}{p{2cm}p{5cm}p{7cm}}
+  \hline
+  \textbf{Group} & \textbf{Goal} & \textbf{Requirements} \\ \hline
+  Maintainer & Create and distribute versioned datasets & Low technical overhead \\
+    & & Easy workflow for releasing new versions \\
+    & & Long term preservation \\
+    & & Easy to crowd-source contributions \\
+    & & Low cost \\
+    & & Low maintenance \\
+  Contributor & Contribute to future versions & Add new data \\
+    & & Report errors in existing data  \\
+  Users (all) & Easy access to releases & Introduction \& overview \\
+    & & Long term stability \\
+    & & Clear path for user to become contributor \\
+  Users (computational, machines) & Scripted access to releases & Easy installation\\
+    & & Long term stability \\
+  \hline
+  \end{tabular}
+  }
+\label{tab:user_requirements}
+\end{table}
+
+\newpage
+
+
+\begin{table}[h!]
+\centering
+\caption{Alternative platforms for minting DOIs from github repositories}
+{\footnotesize
+\vspace{1cm}
+  \begin{tabular}{p{3cm}p{8cm}}
+  \hline
+  \textbf{Provider} & \textbf{Features} \\ \hline
+  \multicolumn{2}{l}{Zenodo: zenodo.org}\\
+    & Automated DOI for each github release \\
+    & Funded and maintained by CERN and OpenAIRE for long term preservation \\
+    & Only includes files embedded in git repo, not built  by code\\
+  \multicolumn{2}{l}{Figshare: figshare.com}\\
+    & Builds data package based on github release \\
+    & Allows you to upload additional files, e.g. datasets built by code \\
+    & Integrated with several journals, e.g. Nature family, PNAS \\
+    & Some limited potential for versioned DOIs\\
+  \hline
+  \end{tabular}
+  }
+\label{tab:doi_minting}
+\end{table}
+
+\newpage
 
 \bibliography{refs}
 
