@@ -6,17 +6,18 @@
 
 \newcommand{\datastorr}{\texttt{datastorr}}
 \newcommand{\smurl}[1]{{\footnotesize\url{#1}}}
+\newcommand{\ghsmurl}[1]{{\footnotesize\href{}{#1}}}
+
 \usepackage{graphicx}
 
-\title{{\datastorr}: A package for distributing dynamic and versioned
-data}
+\title{Leveraging open platforms to manage and distribute streams of versioned data}
 \author{Richard G. FitzJohn$^1$, Daniel S. Falster$^2$, Matthew
   W. Pennell$^3$, and William K. Cornwell$^2$}
 \affiliation{
-$^1$ Somewhere in the UK\\
-$^2$ Evolution \& Ecology Research Centre, School of Biological, Earth and Environmental Sciences,
+$^1$ Imperial College, London, United Kingdom\\
+$^2$ Evolution \& Ecology Research Centre, School of Biological, Earth and Environmental Sciences,\\
 University of New South Wales, Sydney, NSW 2052, Australia\\
-$^3$ Department of Zoology and Biodiversity Research Centre,
+$^3$ Department of Zoology and Biodiversity Research Centre,\\
 University of British Columbia, Vancouver, B.C. V6T 1Z4 Canada\\
 
 }
@@ -26,8 +27,8 @@ University of British Columbia, Vancouver, B.C. V6T 1Z4 Canada\\
 
 \usepackage[title,titletoc,toc]{appendix}
 
-\mstype{Applications Note}
-\runninghead{The {\datastorr} package}
+\mstype{Article Note}
+\runninghead{Lightweight versioned data}
 \keywords{}
 
 \begin{document}
@@ -57,98 +58,229 @@ Main aims of paper:
 % Access point might change, e.g. github goes out of business
 
 % Workflows for dataset assembly: One or two packages? More complex like baad has two packages. Taxonlookup is all in one
-% Licensnes? Currently using MIT (taxonlookup), BSD\_2 (baad.data)
 
 \subsection{Introduction}
 
-Data is quickly becoming a first-class scientific product. Funding bodies, publishers, and scientific social norms are increasingly both requiring data to be published alongside research publications and recognizing the value of producing and sharing data for its own sake. This has been a rapid, and exciting, sea change and we as a community are still catching up and trying to discern how best to disseminate data and credit data creators and aggregators. One thing that is clear is that there is not a one-size-fits-all solution to this problem as data is incredibly heterogeneous. On one end of the spectrum are massive, centralized repositories that are constantly being added to; this is a great solution to storing and distributing relatively standardized data such as sequences (e.g., \texttt{GenBank}, \texttt{SRA}). On the other end are repositories for storing a wide variety of static, stand-alone datasets (\texttt{Dryad}, \texttt{Figshare}, and less optimally, as supplements to research papers. The static model works very well for reproducing a \emph{particular} analysis in a \emph{particular} paper, which is crucial and important for reproducibility. While both of these classes of data are well-served by current infrastructure, we argue that there is a middle ground that does not fit either of these paradigms very well.
+Data is quickly becoming a first-class scientific product. Funding bodies, publishers, and scientific social norms are increasingly both requiring data to be published alongside research publications and recognizing the value of producing and sharing data for its own sake. This has been a rapid, and exciting, sea change and the scientific community are still catching up and trying to discern how best to disseminate data and credit data creators and aggregators. One thing that is clear is that there is no single best solution for managing and distributing data, as data types and use is incredibly heterogeneous. On one end of the spectrum are massive, centralized repositories that are constantly being added to; this is a great solution to storing and distributing relatively standardized data such as sequences (e.g., \texttt{GenBank}, \texttt{SRA}) (Table \ref{tab:sql_v_versioneddata}). On the other end are repositories for storing a wide variety of static, stand-alone datasets (\texttt{Dryad}, \texttt{Figshare}, and less optimally, as supplements to research papers)(Table \ref{tab:sql_v_versioneddata}). While both of these classes of data are well-served by current infrastructure, we suggest there is a substantial middle ground that is not well served by either of the existing paradigms, where a lightweight system for serving versioned datasets is needed.
 
-Consider the case of the data from an ecological meta-analysis. It is only a snapshot of our existing knowledge at a given time. When a new study is published the static dataset from the last meta-analysis immediately becomes obsolete --- to keep up-to-date that new study should be added. However, if we have a static data distribution system, this is impossible. Another problem with the static model is the discovery of small errors. For any much medium-sized database that is repeatedly used, errors will be found, and there needs to be some organized way to correct them. And while a centralized GenBank-esque repository would be useful for updating or adding to the data from this meta-analysis, the infrastructure investment (designing maintaining, and hosting the database) is clearly overkill for most projects and is a very substantial barrier to entry.
+In this article we outline why versioned datasets are needed, and provide a relatively easy to use, yet robust and free tool-chain for researchers to maintain, distribute, and access small-medium sized datasets, by leveraging the best of emerging technologies in data science (Table \ref{tab:technologies}), together with a new software package called \texttt{datastorr}. While our workflow emphasises particular technologies (Table \ref{tab:technologies}), the principles are general and could easily be ported to other platforms.
 
-\subsection{Versioning data}
+\subsection{Why versioning of data is needed}
 
 Almost all useful databases are living--they \emph{should} get better
 through time either by the addition of new data or by improving the
 quality of existing data. For example a dataset on plant characteristics
-might become obsolete as taxonomic changes occur. This might only
-require a small amount of work and a minor change, but if there is no
-way to distribute that new dataset, then that work has to be re-done by
-every user of that dataset. Moreover, those required changes adds steps
-between the canonical dataset and the new analysis (and publication),
+might become obsolete as taxonomic changes occur. Updating the dataset might only
+require a small amount of work, but if there is no
+way to distribute the updated dataset, then that work has to be re-done by
+every user of that dataset. Moreover, those required changes add steps
+between the canonical (or master) dataset and the new analysis (and publication),
 making reproducibility of the new analysis more difficult than it needs
 to be. If the canonical dataset is versioned--and versions are
 accessible--the up-to-date data can be distributed, used, and analyses
-based on these data can be reproduced.
+based on any of the released versions data can be reproduced.
 
-\subsection{One solution for small-to-medium sized
-datasets}
+\subsection{Why versioning of data has been difficult}
 
-Versioned data is laudable goal, but implementation is difficult.
+Providing versioned data is laudable goal, but implementation has been
+difficult. The static model of data distribution widely used in science, where
+datasets are archived either as supplementary materials for a journal article
+or under its own DOI, is simply not designed to provide streams of versioned
+data (Table \ref{tab:sql_v_versioneddata}). A particular issue with the static
+model is that data releases are mostly triggered by publication of academic
+papers. But for a living dataset, there may be multiple releases made in
+between papers. This is particularly the case with the discovery of small
+errors. For any medium-sized dataset that is put to reuse, errors will
+inevitably be found, and there needs to be some easy  way to correct them and
+distribute the updated dataset.
 
-For finding the right tool to version data, the size of the dataset is
-an important consideration. ``Big data'' requires a separate set of
-hardware and software tools (see Amazon web services); examples of big
-data include genetic datasets, global datasets species observations, and
-remote sensing data. This size of this data is bigger than individual
-research groups and often requires a specialized governmental or
-non-governmental institution with full-time staff to curate and maintain
-those research resources.
+To overcome the limitations of static datasets, many research groups have
+setup dedicated webservers to host and distribute data. In these systems,
+datasets areas maintained in a structure database, such as SQL, and a front
+end to this database is written, often using a platform such as Ruby on rails.
+When designed well, such systems are very useful for updating or adding to a
+dataset. However, the infrastructure investment (designing maintaining, and
+hosting the database) is clearly overkill for most projects and is a very
+substantial barrier to entry. And the system requires ongoing funds to keep it
+going, and possibly maintenance. Moreover, the existence of a live webserver,
+does not in itself guarantee ongoing access to different versions of a
+dataset.
 
-We were particularly interested in smaller and more specialized
-problems--the type of datasets that a given research group might
-specialize in. These are the types of research questions that lend
-themselves to periodic analysis (or meta-analyses): - does chocolate
-consumption correlate with obesity? - does the rate of spread of
-epidemics correlate with transmission rates? - how do plants partition
-resources in different conditions? - does the body size of animals
-correlate with range size? - which birds have been observed in an annual
-survey in a given place?
+When considering the right tool to store and deliver versioned data, the size
+of the dataset is another essential consideration. ``Big data'' brings with it
+specific needs and so requires a specific set of hardware and software tools.
+Examples of big data include genetic datasets, global datasets of species
+observations, and remote sensing data. This size of this data is bigger than
+that which individual research groups can maintain and often requires a
+specialized governmental or non-governmental institution with full-time staff
+to curate and maintain those research resources. We were particularly
+interested in smaller and more specialized problems--the type of datasets that
+a given research group might specialize in. In most of these cases, the data
+collected will not be ``big'' but rather small to medium sized. Such data
+support research projects, but are not in most cases general enough to
+establish infra-structure for. But crucially the data themselves will change
+over time. And currently there is no infrastructure for organizing and
+distributing these types of ``living datasets''.
 
-{[}\textbf{MWP:} I think the focus on questions is perhaps misplaced. We
-should instead focus on the qualities of the data that we are interested
-in.{]}
-
-Each of those questions might be the captured in a dataset that could be
-one lab's or NGO's expertise--or more commonly a compendium of work by
-many different groups, harvested from the original researchers or from
-the literature. In many cases, the key data for these questions will not
-be ``big data''--they'll be small to possibly medium sized. And the
-questions may drive a given research line, but are not in most cases
-general enough to establish infra-structure for. But crucially the data
-themselves will change over time. And currently there is no
-infrastructure for organizing and distributing these types of ``living
-datasets''.
-
-So what we need in this case is a low-cost (both money and time) way of
+So what is needed is simple tool-chain for
 making versions of a dataset and delivering it to potential users, along
 with notes on what has changed and why since the previous version.
-Ideally periodically versions can be deposited and given a digital
-object identifier (DOI) at a major research archive, but in between
-major versions, small changes can be made, errors can be corrected, and
-the most recent version can be distributed to users. Idealy there would
-also be a way for users to easily flag errors for the currator to then
-correct in the next release. As many of the users of small-to-medium
-sized datasets use the open source language R, we also prioritized easy
-of use from within R.
+Table \ref{tab:user_requirements} outlines what we consider requirements for
+three groups of people interacting with this system: maintainers,
+contributors, users. The solution is ideally low-cost (both in money and
+time), sophisticated, yet requiring little skill to setup and use.  Ideally
+there would also be a way for users to also become contributors, by flagging
+errors for the curator to correct in the next release, or even for the user to
+fix themselves.
 
-For small datasets, it is possible to use the same tools developed for
-big data: there are a number of high-setup-cost options (stand-alone
-websites, APIs), which have advantages if you have the resources to
-develop and maintain them. We wanted a relatively low cost way (both in
-money and time).
+% For small datasets, it is simply not possible to use the same tools developed for
+% big data: there are a number of high-setup-cost options (stand-alone
+% websites, APIs), which have advantages if you have the resources to
+% develop and maintain them. We wanted a relatively low cost way (both in
+% money and time).
 
-\subsection{Our system}
+\section{A lightweight, cheap and scalable workflow for versioned data}
 
-Our approach builds on the theory of ``semantic versioning'' developed
-for software distribution; this system uses the familiar 1.0.0 notation.
-We argue that data versioning is a similar problem, and we are not the
-first to make this argument (INSERT LINKS HERE). Applying semantic
-versioning to data, a change from 1.0.0 to 1.0.1 implies a tiny changes,
-for example a minor error correction. A change from 1.0.0 to 1.1.0
-implies a major change, for example adding a new study to a meta-analysis
-dataset. A change from 1.0.0 to 2.0.0 implies a very major revision, for
-example improving the entire structure of the dataset and adding new
-columns.
+With the growth of open-source tools and collaborative platforms, we believe
+all the features needed for delivering the vision outlined above are now
+present. The workflow we describe below builds off existing platforms and
+combines them in new ways, and offers the potential for
+widespread uptake at little or no cost.
+
+In brief, the workflow we present borrows best-practices for software
+development  and applies them to the challenge of maintaining and distributing
+versioned data. Software developers maintain a core set of code which produces
+a binary executable file that can be installed on a users local  computers. In
+our system, data developers maintain a core set of files, which produce an
+organised dataset that can be similarly be ``installed'' on a users local
+computer. In either the development of software or data, successive versions
+are released over time (called ``releases''). The similarity in workflow
+between sofwtare and data then allows us to deploy the same technological
+platforms that are used in software development, for the development and
+distribution of data. Importantly, the system we describe uses well-
+established and tools, which ensures high-level performance and stability.
+
+The core technologies used are summarised in Table \ref{tab:technologies} and
+described further below.
+
+\subsection{Version control via `git'}
+
+\texttt{Git} is a version control system that tracks line-by-line changes in text
+files. Git is used extensively in software development, but is increasingly
+also being applied to scientific code and data management \citep{Ram-2013,
+Perkel-2016}. Some key features of git that make attractive for management of data
+include:
+\begin{itemize}
+  \item Tracks all changes in monitored files. These changes are visible to
+  anyone interacting with the repository.
+  \item Allows users to annotate changes (`commits') with informative messages
+  detailing the changes.
+  \item Is a distributed system, meaning anyone who downloads the repository
+  can access the full history and contribute changes.
+  \item Can easily handle file sizes of at least 50Mb and repositories up to 1Gb.
+\end{itemize}
+
+\subsection{Github platform for storing git repositories}
+
+The website Github (\smurl{www.github.com}) is a commercial platform for
+hosting and interacting with git repositories. In practice, each dataset
+should be a separate git repository on github (see Table \ref{tab:examples} for
+examples). Although mainly used for
+computer code, Github is now also being use to manage scientific data
+\citep{Perkel-2016}. Github has a double role in our workflow:
+\begin{enumerate}
+  \item It provides a platform for data contributors to sync their files
+  and correspond about changes in the dataset.
+  \item It hosts a stream of data releases, thus acting as a central
+  point for distribution of the data.
+\end{enumerate}
+
+
+Particular features of the Github platform that make it attractive for
+handling versioned data include:
+
+\begin{itemize}
+  \item \textbf{Issues}: Each repository has tab where contributors can document issues in the data. These issue tags then provide a centralised point for describing a problem and discussing potential solutions.
+  \item \textbf{Pull requests}: Much of the activity on Github is on opens-ource projects with many contributors. An essential feature that of sending a pull request, whereby a would-be contributor submits prospective changes to be incorporated.
+  \item \textbf{Releases}: Github is designed to host releases (in this case compiled dataset), associated with a particular commit to the repository.
+  \item \textbf{Tags}: Git commits and releases can be tagged with an informative label.
+  \item \textbf{It's free}: All open-source projects are hosted for free on Github.
+  \item \textbf{Quality}: The Github servers are designed for managing enetrpise level projects, and as such can deliver multiple requests for releases and have sophisticated capabilities.
+  \item \textbf{DOIs}: Github repos can be automatically archived and assigned a DOI, via several providers (Table \ref{tab:doi_minting}).
+\end{itemize}
+
+\subsection{Semantic versioning}
+
+To address the issue of how successive releases should be labelled, we suggest
+applying the theory of ``semantic versioning'' developed for software
+distribution. This system uses (the potentially familiar) notation of form
+``1.0.0'' for successive versions (Fig \ref{fig:semantic}). As has been noted
+(REFS), labelling of data versions presents a similar problem to the labelling
+of software releases: signalling to users the types of change that has
+occurred between successive versions. Applying semantic versioning to data, a
+change from 1.0.0 to 1.0.1 implies tiny changes, for example a minor error
+correction. A change from 1.0.0 to 1.1.0 implies a substantial enhancement,
+for example adding a new study to a meta-analysis dataset (while otherwise
+maintaining the same dataset structure). A change from 1.0.0 to 2.0.0 implies
+a very major revision, for example improving the entire structure of the
+dataset and adding new columns.
+
+\subsection{\texttt{R}, \texttt{CRAN}, \texttt{datastorr}}
+
+While Github can host a stream of versioned data releases, we also provide a
+way for users to retrieve the data. One method is to point and click using a
+web browser, then download the data from the Github releases tab. But
+computational users will want something more sophisticated, allowing automated
+retrieval of different versions. Github makes this possible by providing a
+thorough API from which releases can be accessed programatically. And ideally
+load it directly into their analysis platform. As many of the users of small-
+to-medium sized datasets use the open source language \texttt{R}, we also
+prioritized easy of use from within \texttt{R}. Moreover, the  Comprehensive R
+Archive Network (CRAN, \smurl{cran.r-project.org}) offers a facility for users
+to write their own packages, which are then archived and able to be installed
+by anyone running R.
+
+To distribute/retrieve versioned data releases from Github, we have developed
+a  work flow that enables dataset maintainers to write a customised R package
+for their dataset. This workflow uses another R package called
+\texttt{datastorr} to handle all the interactions with github. For example, the package
+\texttt{baad.data} can retrieve data releases from the Biomass and Allometry Database, stored at \ghsmurl{github.com/dfalster/baad/} (see Table \ref{tab:examples} for more examples).
+
+Specific features of the \texttt{datastorr} package that make it easy to use include:
+
+\begin{itemize}
+  \item \textbf{Speed}: The data packages contain only the code for retrieving the data, not the data itself, and so are quick to install.
+  \item \textbf{Minimal code}: Specific versions of a dataset can be downlaoded in just two lines of code. Installing the package (if not already installed) takes an additional line.
+  \item \textbf{Efficient}: On any given machine, each dataset is downloaded only once. It is then stored in a standard directory for R packages, and so is available for offline access.
+\end{itemize}
+
+\subsection{Make your own data package}
+
+Table \ref{tab:examples} gives details for XXX example datasets already using
+the distribution system described here. Each of these is a versioned dataset,
+designed for a particular research goal, and also explicitly flexible such
+that they can grow in the future. In all three cases, the user needs to
+install a few R packages. The data versions themselves are stored as Github
+Releases (as well as if desired on DataDryad or FigShare), then any of the
+versions of the data can be downloaded and used with only one of \texttt{R}
+code.
+
+\section{Discussion}
+
+Topics to consider:
+
+\begin{itemize}
+
+\item Addresses important need, leveraging open source platfroms. Shows power of open source: by writing single new package, can provide global distribution and access to data, with first class system for managing contents.
+\item Versioning and open access essential for reproducibility
+\item Versioning should enable better benchmarking of models, also because tests can be automated.
+\item We have focussed on particualr set of tools, but could do similar things with other platfroms or languages.
+....
+\end{itemize}
+
+....
+
+(old content unchanged)
 
 One of the key problems in switching from a static to a dynamic data
 world, is that it's currently hard to set up and maintain a system like
@@ -167,40 +299,14 @@ for offline access, easy to port to other platforms, and can get a doi
 when desired (i.e.~when it's used for a publication). All old versions
 are accessible.
 
-\subsection{Some worked examples}
 
-So far we have three:
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\itemsep1pt\parskip0pt\parsep0pt
-\item
-  \texttt{coraltraits}
-\item
-  \texttt{Biomass And Allometry Database} \citep{Falster-2015}
-\item
-  \texttt{taxonlookup} \citep{Pennell-2015a}
-\item
-  \texttt{plantgrowthform}
-\end{enumerate}
+\subsection{How much expertise is needed to setup and use?}
 
-Each of these is a versioned dataset, designed for a particular research
-goal, and also explicitly flexible such that they can grow in the
-future. In all three cases, the user needs to install a few R packages.
-The data versions themselves are stored as Github Releases (as well as
-if desired on DataDryad or FigShare), then any of the versions of the
-data can be downloaded and used with only one of \texttt{R} code.
-
-\subsection{How much expertise is needed to use a versioned
-dataset?}
-
-Very very basic \texttt{R}. With 4 lines of \texttt{R} code, you can
+To use a versioned dataset: Very very basic \texttt{R}. With 4 lines of \texttt{R} code, you can
 have the data downloaded and loaded into R and ready for use.
 
-\subsection{How much expertise is needed to set a system like this
-up?}
-
-Basically there are two general skills required: 1) understanding
+To set a system like this up: Basically there are two general skills required: 1) understanding
 version control via \texttt{git} and 2) writing a very simple R package.
 From the prolific Hadley Wickham there is a
 \href{http://r-pkgs.had.co.nz/git.html}{very clear introduction to git}
@@ -210,7 +316,7 @@ basics of R packages}.
 With those two skills the rest should be relatively easy. To set up a
 living dataset you need to provide:
 \begin{enumerate}
-  \item a github repository name (e.g.~wcornwell/taxonlookup, traitecoevo/baad.data).
+  \item a github repository name (e.g.~`wcornwell/taxonlookup`, `traitecoevo/baad.data`).
   \item A single file that will be the versioned dataset (e.g. \texttt{plant\_lookup.csv} or \texttt{baad\_data.zip}).
   \item A function to load that data into R:(e.g.~a simple wrapper around \texttt{read.csv}).
 \end{enumerate}
@@ -240,14 +346,14 @@ this might be a useful approach.
 \vspace{1cm}
   \begin{tabular}{p{2.5cm}p{3.5cm}p{3.5cm}p{4cm}}
   \hline
-  \textbf{Feature} & \textbf{Static data}& \textbf{Web database} & \textbf{Lightweight versioned data}\\ 
+  \textbf{Feature} & \textbf{Static datasets}& \textbf{Web database} & \textbf{Lightweight versioned data}\\
   \hline
-   Webserver        & dataDryad or others & custom                          &  Maintained by github.com\\
+   Webserver        & e.g. dataDryad & custom                          &  Maintained by github.com\\
    Backend          & none & SQL + Ruby-on-rails 			& git + datastorr \\
    User access      & Web browser & Web browser 				    & R \\
-   Ease of setup    & Very easy & Moderate 							& Easy\\ % server, backups, bandwidth
-   Data size        &Up to several Gb & Small-Very large 				& Up to 1Gb\\
-   Cost             &Varies & Varies  						& Free \\
+   Ease of setup    & Very easy & Hard 							& Easy\\ % server, backups, bandwidth
+   Data size        & Up to several Gb & Small-Very large 				& Up to 1Gb\\
+   Cost             & Varies & Varies  						& Free \\
    Bandwidth        &managed by dataDryad & Pro rata 						& Managed by github.com\\
    Maintainer skills &none & Ruby + php 					& R + git \\
    User skills      &Web browsing& Web browsing  					& basic R \\
@@ -265,19 +371,19 @@ this might be a useful approach.
 
 \begin{table}[h!]
 \centering
-\caption{Main technologies leveraged to store and distribute "Lightweight versioned data".}
+\caption{Technologies used to maintain, store and distribute "Lightweight versioned data".}
 {\footnotesize
 \vspace{1cm}
   \begin{tabular}{p{5cm}p{10cm}}
   \hline
   \textbf{Technology} & \textbf{Description} \\\hline
    git & Open source version control system used for tracking progressive changes in a set of text files, typically computer code but also data\\
-   github.com & A commercial webplatform for sharing, visualising and managing `git' repositories. Includes issue tracking.\\
-   R     &  Open source statsitcial and data processing language. \\
+   github.com & A commercial webplatform for sharing, visualising and managing `git' repositories. Includes issue tracking\\
+   R     &  Open source statsitcial and data processing language \\
    CRAN  &  Open source repository of packages for the R language \\
-   datastorr & R package used to fetch github releases. \\
+   datastorr & R package used to fetch versioned releases from github  \\
    DOI & Digital object identifier, which refers a user to a single stable digital object \\ 
-   DOI ``minting'' & creation of DOI's \\
+   DOI ``minting'' & creation of a DOI's \\
    \hline
   \end{tabular}
   }
@@ -342,6 +448,47 @@ this might be a useful approach.
 
 \newpage
 
+\begin{table}[h!]
+\centering
+\caption{Example datasets using the lightweight versioned data workflow described in this paper.}
+{\footnotesize
+\vspace{1cm}
+
+  \begin{tabular}{p{7cm}p{4cm}p{2cm}}
+  \hline
+   \textbf{URL} & \textbf{R package} & \textbf{Description} \\ \hline
+  \ghsmurl{github.com/dfalster/baad/} & \texttt{baad.data} & The \texttt{Biomass And Allometry Database} \citep{Falster-2015} provides...\\
+  \ghsmurl{github.com/traitecoevo/taxonlookup} & \texttt{taxonlookup} & \texttt{taxonlookup} \citep{Pennell-2015a} provides...\\
+  \ghsmurl{github.com/...} & \texttt{plantgrowthform}  & \texttt{plantgrowthform} provides... \\
+  \ghsmurl{github.com/...} & \texttt{fungaltraits} & \texttt{fungaltraits} (in progress) provides... \\
+  \ghsmurl{github.com/...} & \texttt{13C} & \texttt{13C} (in progress) provides .... \\
+  \hline
+  \end{tabular}
+  }
+\label{tab:examples}
+\end{table}
+
+\newpage
+\section{Figures}
+
+\begin{figure}[!hb]
+\centering
+%\includegraphics[width=\linewidth]{figure.pdf}
+\caption{Semantic versioning allows users to anticipate the types of changes that have occurred between successive versions of a dataset.
+\textbf{a)} 3 numbers indicate type of change.
+\textbf{b)} A typical release stream.}
+\label{fig:semantic}
+\end{figure}
+
+\newpage
+
+
+\begin{figure}[!hb]
+\centering
+%\includegraphics[width=\linewidth]{figure.pdf}
+\caption{Overview of the technologies involved in distributing Lightweight versioned data.}
+\label{fig:technology_stack}
+\end{figure}
 \bibliography{refs}
 
 \end{document}
