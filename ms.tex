@@ -6,7 +6,7 @@
 
 \newcommand{\datastorr}{\texttt{datastorr}}
 \newcommand{\smurl}[1]{{\footnotesize\url{#1}}}
-\newcommand{\ghsmurl}[1]{{\footnotesize\href{}{#1}}}
+\newcommand{\ghsmurl}[1]{{\footnotesize\href{https://github.com/#1}{#1}}}
 
 \usepackage{graphicx}
 
@@ -42,22 +42,10 @@ University of British Columbia, Vancouver, B.C. V6T 1Z4 Canada\\
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \itemsep1pt\parskip0pt\parsep0pt
-\item Data is cool
+\item Data is cool.
+\item Recognise need for versioned datasets
+\item Provide workflow / infrastructure for people to distribute and access small-medium sized data with minimal setup and cost, by leveraging emerging technologies
 \end{enumerate}
-
-\section{Overview}
-
-Main aims of paper:
-
-\begin{enumerate}
-  \item Recognise need for versioned datasets
-  \item Provide workflow / infrastructure for people to distribute and access small-medium sized data with minimal setup and cost, by leveraging emerging technologies
-\end{enumerate}
-
-
-% Access point might change, e.g. github goes out of business
-
-% Workflows for dataset assembly: One or two packages? More complex like baad has two packages. Taxonlookup is all in one
 
 \subsection{Introduction}
 
@@ -244,7 +232,7 @@ To distribute/retrieve versioned data releases from Github, we have developed
 a  work flow that enables dataset maintainers to write a customised R package
 for their dataset. This workflow uses another R package called
 \texttt{datastorr} to handle all the interactions with github. For example, the package
-\texttt{baad.data} can retrieve data releases from the Biomass and Allometry Database, stored at \ghsmurl{github.com/dfalster/baad/} (see Table \ref{tab:examples} for more examples).
+\texttt{baad.data} can retrieve data releases from the Biomass and Allometry Database, stored at \smurl{github.com/dfalster/baad/} (see Table \ref{tab:examples} for more examples).
 
 Specific features of the \texttt{datastorr} package that make it easy to use include:
 
@@ -337,7 +325,9 @@ satellite downloads). For a set of problems that need periodically
 updated small-to-medium sized data (e.g.~most meta-analysis problems),
 this might be a useful approach.
 
-\section{Table}
+\newpage
+
+\section{Tables}
 
 \begin{table}[h!]
 \centering
@@ -428,15 +418,13 @@ this might be a useful approach.
 \caption{Alternative platforms for minting DOIs from github repositories}
 {\footnotesize
 \vspace{1cm}
-  \begin{tabular}{p{3cm}p{8cm}}
+  \begin{tabular}{p{4cm}p{8cm}}
   \hline
   \textbf{Provider} & \textbf{Features} \\ \hline
-  \multicolumn{2}{l}{Zenodo: zenodo.org}\\
-    & Automated DOI for each github release \\
+  Zenodo: \smurl{zenodo.org} & Automated DOI for each github release \\
     & Funded and maintained by CERN and OpenAIRE for long term preservation \\
     & Only includes files embedded in git repo, not built  by code\\
-  \multicolumn{2}{l}{Figshare: figshare.com}\\
-    & Builds data package based on github release \\
+  Figshare: \smurl{figshare.com} & Builds data package based on github release \\
     & Allows you to upload additional files, e.g. datasets built by code \\
     & Integrated with several journals, e.g. Nature family, PNAS \\
     & Some limited potential for versioned DOIs\\
@@ -454,11 +442,11 @@ this might be a useful approach.
 {\footnotesize
 \vspace{1cm}
 
-  \begin{tabular}{p{7cm}p{4cm}p{2cm}}
+  \begin{tabular}{p{3.5cm}p{3cm}p{7cm}}
   \hline
-   \textbf{URL} & \textbf{R package} & \textbf{Description} \\ \hline
-  \ghsmurl{github.com/dfalster/baad/} & \texttt{baad.data} & The \texttt{Biomass And Allometry Database} \citep{Falster-2015} provides...\\
-  \ghsmurl{github.com/traitecoevo/taxonlookup} & \texttt{taxonlookup} & \texttt{taxonlookup} \citep{Pennell-2015a} provides...\\
+   \textbf{Github repo} & \textbf{R package} & \textbf{Description} \\ \hline
+  \ghsmurl{dfalster/baad/} & \texttt{baad.data} & The \texttt{Biomass And Allometry Database} \citep{Falster-2015} provides...\\
+  \ghsmurl{traitecoevo/taxonlookup} & \texttt{taxonlookup} & \texttt{taxonlookup} \citep{Pennell-2015a} provides...\\
   \ghsmurl{github.com/...} & \texttt{plantgrowthform}  & \texttt{plantgrowthform} provides... \\
   \ghsmurl{github.com/...} & \texttt{fungaltraits} & \texttt{fungaltraits} (in progress) provides... \\
   \ghsmurl{github.com/...} & \texttt{13C} & \texttt{13C} (in progress) provides .... \\
