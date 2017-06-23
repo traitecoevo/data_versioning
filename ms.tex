@@ -11,15 +11,15 @@
 \usepackage{graphicx}
 
 \title{Leveraging open platforms to manage and distribute streams of versioned data}
-\author{Richard G. FitzJohn$^1$, Daniel S. Falster$^2$, Matthew
-  W. Pennell$^3$, and William K. Cornwell$^2$}
+\author{Richard G. FitzJohn$^1$, Daniel S. Falster$^2$,\\ Matthew
+  W. Pennell$^3$, and William K. Cornwell$^{2,*}$}
 \affiliation{
 $^1$ Imperial College, London, United Kingdom\\
 $^2$ Evolution \& Ecology Research Centre, School of Biological, Earth and Environmental Sciences,\\
 University of New South Wales, Sydney, NSW 2052, Australia\\
 $^3$ Department of Zoology and Biodiversity Research Centre,\\
 University of British Columbia, Vancouver, B.C. V6T 1Z4 Canada\\
-
+$^*$ Corresponding author: w.cornwell@unsw.edu.au\\
 }
 \date{}
 
@@ -49,9 +49,9 @@ University of British Columbia, Vancouver, B.C. V6T 1Z4 Canada\\
 
 \subsection{Introduction}
 
-Data is quickly becoming a first-class scientific product. Funding bodies, publishers, and scientific social norms are increasingly both requiring data to be published alongside research publications and recognizing the value of producing and sharing data for its own sake. This has been a rapid, and exciting, sea change and the scientific community are still catching up and trying to discern how best to disseminate data and credit data creators and aggregators. One thing that is clear is that there is no single best solution for managing and distributing data, as data types and use is incredibly heterogeneous. On one end of the spectrum are massive, centralized repositories that are constantly being added to; this is a great solution to storing and distributing relatively standardized data such as sequences (e.g., \texttt{GenBank}, \texttt{SRA}) (Table \ref{tab:sql_v_versioneddata}). On the other end are repositories for storing a wide variety of static, stand-alone datasets (\texttt{Dryad}, \texttt{Figshare}, and less optimally, as supplements to research papers)(Table \ref{tab:sql_v_versioneddata}). While both of these classes of data are well-served by current infrastructure, we suggest there is a substantial middle ground that is not well served by either of the existing paradigms, where a lightweight system for serving versioned datasets is needed.
+Data is now a first-class scientific product. Funding bodies, publishers, and scientific social norms are increasingly both requiring data to be published alongside research publications and recognizing the value of producing and sharing data without any accompanying analyses. This has been a rapid, and exciting, sea change and the scientific community is still grappling with how best to disseminate data and credit data creators and aggregators [Cite some Open Science papers, both pro and con]. One thing that is clear is that there is no single best solution for managing and distributing data, as data types and use is incredibly heterogeneous. On one end of the spectrum are massive, centralized repositories that are constantly being added to; this is a great solution to storing and distributing relatively standardized data such as sequences (e.g., \texttt{GenBank}, \texttt{SRA}) (Table \ref{tab:sql_v_versioneddata}). On the other end are repositories for storing a wide variety of static, stand-alone datasets (\texttt{Dryad}, \texttt{Figshare}, and less optimally, as supplements to research papers)(Table \ref{tab:sql_v_versioneddata}). We suggest there is a substantial middle ground that is not well served by either of these existing paradigms, where a lightweight system for serving versioned datasets is needed.
 
-In this article we outline why versioned datasets are needed, and provide a relatively easy to use, yet robust and free tool-chain for researchers to maintain, distribute, and access small-medium sized datasets, by leveraging the best of emerging technologies in data science (Table \ref{tab:technologies}), together with a new software package called \texttt{datastorr}. While our workflow emphasises particular technologies (Table \ref{tab:technologies}), the principles are general and could easily be ported to other platforms.
+In this article we i) introduce the concept of Lightweight Versioned Data (LVD) and describe why it is needed; ii) outline how emerging technologies in data science (Table \ref{tab:technologies}) can be leveraged to help researchers maintain, distribute, and access small to medium sized datasets; and iii) introduce a new R package called \texttt{datastorr}, an implementation of a LVD system. While we emphasize particular technologies in our implementation, the principles are general and could easily be ported to other platforms. Furthermore, our backgrounds in the life sciences (and ecology and evolution, in particular); however, we argue that the issues we identify and the solutions we put forward are likely to be relevant to a wide variety of domains, across the natural and social sciences.
 
 \subsection{Why versioning of data is needed}
 
