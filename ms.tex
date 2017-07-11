@@ -58,7 +58,7 @@ In this article we i) introduce the concept of Lightweight Versioned Data (LVD) 
 Almost all useful databases are living--they \emph{should} get better
 through time either by the addition of new data or by improving the
 quality of existing data. For example a dataset on plant characteristics
-might become obsolete as taxonomic changes occur. Updating the dataset might only
+might become outdated as taxonomic changes occur. Updating the dataset might only
 require a small amount of work, but if there is no
 way to distribute the updated dataset, then that work has to be re-done by
 every user of that dataset. Moreover, those required changes add steps
@@ -70,9 +70,7 @@ based on any of the released versions data can be reproduced.
 
 \subsection{Why versioning of data has been difficult}
 
-Providing versioned data is laudable goal, but implementation has been
-difficult. The static model of data distribution widely used in science, where
-datasets are archived either as supplementary materials for a journal article
+While the benefits of versioned data are fairly clear, determining how best to implement it has been anything but. The static model of data distribution widely used in science, where datasets are archived either as supplementary materials for a journal article
 or under its own DOI, is simply not designed to provide streams of versioned
 data (Table \ref{tab:sql_v_versioneddata}). A particular issue with the static
 model is that data releases are mostly triggered by publication of academic
@@ -89,8 +87,7 @@ end to this database is written, often using a platform such as Ruby on rails.
 When designed well, such systems are very useful for updating or adding to a
 dataset. However, the infrastructure investment (designing maintaining, and
 hosting the database) is clearly overkill for most projects and is a very
-substantial barrier to entry. And the system requires ongoing funds to keep it
-going, and possibly maintenance. Moreover, the existence of a live webserver,
+substantial barrier to entry. Furthermore, the system requires ongoing funds to maintain it, making it often unsustainable for many groups. Moreover, the existence of a live webserver,
 does not in itself guarantee ongoing access to different versions of a
 dataset.
 
@@ -135,17 +132,16 @@ present. The workflow we describe below builds off existing platforms and
 combines them in new ways, and offers the potential for
 widespread uptake at little or no cost.
 
-In brief, the workflow we present borrows best-practices for software
-development  and applies them to the challenge of maintaining and distributing
+In brief, the workflow we present, which we call Lightweight Versioned Data (LVD), borrows best-practices for software
+development and applies them to the challenge of maintaining and distributing
 versioned data. Software developers maintain a core set of code which produces
-a binary executable file that can be installed on a users local  computers. In
-our system, data developers maintain a core set of files, which produce an
-organised dataset that can be similarly be ``installed'' on a users local
+a binary executable file that can be installed on a users local  computers. With a LVD system, data developers maintain a core set of files, which produce an
+organised dataset that can be similarly be ``installed'' on a user's local
 computer. In either the development of software or data, successive versions
 are released over time (called ``releases''). The similarity in workflow
 between sofwtare and data then allows us to deploy the same technological
 platforms that are used in software development, for the development and
-distribution of data. Importantly, the system we describe uses well-
+distribution of data. Importantly, LVD uses well-
 established and tools, which ensures high-level performance and stability.
 
 The core technologies used are summarised in Table \ref{tab:technologies} and
@@ -156,8 +152,7 @@ described further below.
 \texttt{Git} is a version control system that tracks line-by-line changes in text
 files. Git is used extensively in software development, but is increasingly
 also being applied to scientific code and data management \citep{Ram-2013,
-Perkel-2016}. Some key features of git that make attractive for management of data
-include:
+Perkel-2016}. Git is attractive for data management because it: 
 \begin{itemize}
   \item Tracks all changes in monitored files. These changes are visible to
   anyone interacting with the repository.
@@ -168,9 +163,9 @@ include:
   \item Can easily handle file sizes of at least 50Mb and repositories up to 1Gb.
 \end{itemize}
 
-\subsection{Github platform for storing git repositories}
+\subsection{GitHub platform for storing git repositories}
 
-The website Github (\smurl{www.github.com}) is a commercial platform for
+The website GitHub (\smurl{www.github.com}) is a commercial platform for
 hosting and interacting with git repositories. In practice, each dataset
 should be a separate git repository on github (see Table \ref{tab:examples} for
 examples). Although mainly used for
@@ -189,11 +184,11 @@ handling versioned data include:
 
 \begin{itemize}
   \item \textbf{Issues}: Each repository has tab where contributors can document issues in the data. These issue tags then provide a centralised point for describing a problem and discussing potential solutions.
-  \item \textbf{Pull requests}: Much of the activity on Github is on opens-ource projects with many contributors. An essential feature that of sending a pull request, whereby a would-be contributor submits prospective changes to be incorporated.
-  \item \textbf{Releases}: Github is designed to host releases (in this case compiled dataset), associated with a particular commit to the repository.
+  \item \textbf{Pull requests}: Much of the activity on GitHub is on open-source projects with many contributors. An essential feature that of sending a pull request, whereby a would-be contributor submits prospective changes to be incorporated.
+  \item \textbf{Releases}: GitHub is designed to host releases (in this case compiled datasets), associated with a particular commit to the repository.
   \item \textbf{Tags}: Git commits and releases can be tagged with an informative label.
-  \item \textbf{It's free}: All open-source projects are hosted for free on Github.
-  \item \textbf{Quality}: The Github servers are designed for managing enetrpise level projects, and as such can deliver multiple requests for releases and have sophisticated capabilities.
+  \item \textbf{It's free}: All open-source projects are hosted for free on GitHub.
+  \item \textbf{Quality}: The GitHub servers are designed for managing enetrpise level projects, and as such can deliver multiple requests for releases and have sophisticated capabilities.
   \item \textbf{DOIs}: Github repos can be automatically archived and assigned a DOI, via several providers (Table \ref{tab:doi_minting}).
 \end{itemize}
 
@@ -208,31 +203,15 @@ of software releases: signalling to users the types of change that has
 occurred between successive versions. Applying semantic versioning to data, a
 change from 1.0.0 to 1.0.1 implies tiny changes, for example a minor error
 correction. A change from 1.0.0 to 1.1.0 implies a substantial enhancement,
-for example adding a new study to a meta-analysis dataset (while otherwise
+for example adding a new study to a meta-analysis dataset (while otherwise[]
 maintaining the same dataset structure). A change from 1.0.0 to 2.0.0 implies
 a very major revision, for example improving the entire structure of the
 dataset and adding new columns.
 
-\subsection{\texttt{R}, \texttt{CRAN}, \texttt{datastorr}}
+\subsection{\texttt{datastorr} and dataset-specific R packages}
 
-While Github can host a stream of versioned data releases, we also provide a
-way for users to retrieve the data. One method is to point and click using a
-web browser, then download the data from the Github releases tab. But
-computational users will want something more sophisticated, allowing automated
-retrieval of different versions. Github makes this possible by providing a
-thorough API from which releases can be accessed programatically. And ideally
-load it directly into their analysis platform. As many of the users of small-
-to-medium sized datasets use the open source language \texttt{R}, we also
-prioritized easy of use from within \texttt{R}. Moreover, the  Comprehensive R
-Archive Network (CRAN, \smurl{cran.r-project.org}) offers a facility for users
-to write their own packages, which are then archived and able to be installed
-by anyone running R.
-
-To distribute/retrieve versioned data releases from Github, we have developed
-a  work flow that enables dataset maintainers to write a customised R package
-for their dataset. This workflow uses another R package called
-\texttt{datastorr} to handle all the interactions with github. For example, the package
-\texttt{baad.data} can retrieve data releases from the Biomass and Allometry Database, stored at \smurl{github.com/dfalster/baad/} (see Table \ref{tab:examples} for more examples).
+While GitHub can host a stream of versioned data releases, many researchers will likely want to be able to access this data programmatically, and ideally, load it directly into their analysis platform. Our solution is for researchers releasing a dataset to write a customized R package, specific to their dataset. For example, the package
+\texttt{baad.data} can retrieve data releases from the Biomass and Allometry Database, stored at \smurl{github.com/dfalster/baad/} (see Table \ref{tab:examples} for more examples). To enable this, we have developed a new R package called \texttt{datastorr}, which does all the heavy lifting both in terms of creating templates for the data-specific R packages and for interacting with the GitHub API. With \texttt{datastorr}, setting up a new data-specific package is straightforward and requires minimal computational skills. 
 
 Specific features of the \texttt{datastorr} package that make it easy to use include:
 
@@ -242,16 +221,7 @@ Specific features of the \texttt{datastorr} package that make it easy to use inc
   \item \textbf{Efficient}: On any given machine, each dataset is downloaded only once. It is then stored in a standard directory for R packages, and so is available for offline access.
 \end{itemize}
 
-\subsection{Make your own data package}
-
-Table \ref{tab:examples} gives details for XXX example datasets already using
-the distribution system described here. Each of these is a versioned dataset,
-designed for a particular research goal, and also explicitly flexible such
-that they can grow in the future. In all three cases, the user needs to
-install a few R packages. The data versions themselves are stored as Github
-Releases (as well as if desired on DataDryad or FigShare), then any of the
-versions of the data can be downloaded and used with only one of \texttt{R}
-code.
+We have created \texttt{datastorr} to make LVD easy to implement and manage for \texttt{R} users. And as we stated above, this has already been used to release a variety of datasets (Table \ref{tab:examples}). However, we can imagine alternative methods for interacting with GitHub and building templates; so while useful, adopting LVD does not critically depend on using \texttt{datastorr}. Furthermore, the concept of LVD is general and we would love to see implementations in \texttt{Python} or other languages. 
 
 \section{Discussion}
 
