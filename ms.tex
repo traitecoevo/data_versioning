@@ -221,6 +221,22 @@ Specific features of the \texttt{datastorr} package that make it easy to use inc
   \item \textbf{Efficient}: On any given machine, each dataset is downloaded only once. It is then stored in a standard directory for R packages, and so is available for offline access.
 \end{itemize}
 
+[MWP: moved this from discussion]
+To set up a
+living dataset you need to provide:
+\begin{enumerate}
+  \item a github repository name (e.g.~`wcornwell/taxonlookup`, `traitecoevo/baad.data`).
+  \item A single file that will be the versioned dataset (e.g. \texttt{plant\_lookup.csv} or \texttt{baad\_data.zip}).
+  \item A function to load that data into R:(e.g.~a simple wrapper around \texttt{read.csv}).
+\end{enumerate}
+
+Then as the data changes (hopefully improves) with time, update the data
+file and create a github release with a new version number (preferably
+using \href{http://semver.org/}{semantic versioning}). All the versions
+will be available to the user. And versions can be given a unique DOI
+when appropriate, e.g.~when they are used in a publication.
+
+
 We have created \texttt{datastorr} to make LVD easy to implement and manage for \texttt{R} users. And as we stated above, this has already been used to release a variety of datasets (Table \ref{tab:examples}). However, we can imagine alternative methods for interacting with GitHub and building templates; so while useful, adopting LVD does not critically depend on using \texttt{datastorr}. Furthermore, the concept of LVD is general and we would love to see implementations in \texttt{Python} or other languages. 
 
 \section{Discussion}
@@ -236,54 +252,41 @@ Topics to consider:
 ....
 \end{itemize}
 
-....
-
-(old content unchanged)
-
-One of the key problems in switching from a static to a dynamic data
-world, is that it's currently hard to set up and maintain a system like
-this. Ideally using a versioned database should be easy for both the
-user and the data maintainer. This is especially crucial is the data
-maintainers are busy. Moreover, old versions need to be preserved in a
-stable and accessible way.
-
-To try and achieve to above goals, we built a system to distribute
-versions of our datasets. We think that with this infrastructure, it is
-relatively easy to set up and maintain a versioned system with any
-small-to-medium sized dataset.
-
-In our system, the data is downloaded only once per computer, available
-for offline access, easy to port to other platforms, and can get a doi
-when desired (i.e.~when it's used for a publication). All old versions
-are accessible.
 
 
+%(old content unchanged)
+%
+%One of the key problems in switching from a static to a dynamic data
+%world, is that it's currently hard to set up and maintain a system like
+%this. Ideally using a versioned database should be easy for both the
+%user and the data maintainer. This is especially crucial is the data
+%maintainers are busy. Moreover, old versions need to be preserved in a
+%stable and accessible way.
+%
+%To try and achieve to above goals, we built a system to distribute
+%versions of our datasets. We think that with this infrastructure, it is
+%relatively easy to set up and maintain a versioned system with any
+%small-to-medium sized dataset.
+%
+%In our system, the data is downloaded only once per computer, available
+%for offline access, easy to port to other platforms, and can get a doi
+%when desired (i.e.~when it's used for a publication). All old versions
+%are accessible.
+%
+%
+%
+%\subsection{How much expertise is needed to setup and use?}
+%
+%To use a versioned dataset: Very very basic \texttt{R}. With 4 lines of \texttt{R} code, you can
+%have the data downloaded and loaded into R and ready for use.
+%
+%To set a system like this up: Basically there are two general skills required: 1) understanding
+%version control via \texttt{git} and 2) writing a very simple R package.
+%From the prolific Hadley Wickham there is a
+%\href{http://r-pkgs.had.co.nz/git.html}{very clear introduction to git}
+%and \href{http://r-pkgs.had.co.nz/intro.html}{an instruction to the
+%basics of R packages}.
 
-\subsection{How much expertise is needed to setup and use?}
-
-To use a versioned dataset: Very very basic \texttt{R}. With 4 lines of \texttt{R} code, you can
-have the data downloaded and loaded into R and ready for use.
-
-To set a system like this up: Basically there are two general skills required: 1) understanding
-version control via \texttt{git} and 2) writing a very simple R package.
-From the prolific Hadley Wickham there is a
-\href{http://r-pkgs.had.co.nz/git.html}{very clear introduction to git}
-and \href{http://r-pkgs.had.co.nz/intro.html}{an instruction to the
-basics of R packages}.
-
-With those two skills the rest should be relatively easy. To set up a
-living dataset you need to provide:
-\begin{enumerate}
-  \item a github repository name (e.g.~`wcornwell/taxonlookup`, `traitecoevo/baad.data`).
-  \item A single file that will be the versioned dataset (e.g. \texttt{plant\_lookup.csv} or \texttt{baad\_data.zip}).
-  \item A function to load that data into R:(e.g.~a simple wrapper around \texttt{read.csv}).
-\end{enumerate}
-
-Then as the data changes (hopefully improves) with time, update the data
-file and create a github release with a new version number (preferably
-using \href{http://semver.org/}{semantic versioning}). All the versions
-will be available to the user. And versions can be given a unique DOI
-when appropriate, e.g.~when they are used in a publication.
 
 \subsection{Conclusion}
 
