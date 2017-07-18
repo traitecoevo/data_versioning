@@ -10,7 +10,7 @@
 
 \usepackage{graphicx}
 
-\title{Leveraging open platforms to manage and distribute streams of versioned data}
+\title{Versioned data: why it’s needed and how it can be achieved (easily and cheaply)}
 \author{Richard G. FitzJohn$^1$, Daniel S. Falster$^2$,\\ Matthew
   W. Pennell$^3$, and William K. Cornwell$^{2,*}$}
 \affiliation{
@@ -51,7 +51,7 @@ $^*$ Corresponding author: w.cornwell@unsw.edu.au\\
 
 Data is now a first-class scientific product. Funding bodies, publishers, and scientific social norms are increasingly both requiring data to be published alongside research publications and recognizing the value of producing and sharing data without any accompanying analyses. This has been a rapid, and exciting, sea change and the scientific community is still grappling with how best to disseminate data and credit data creators and aggregators [Cite some Open Science papers, both pro and con]. One thing that is clear is that there is no single best solution for managing and distributing data, as data types and use is incredibly heterogeneous. On one end of the spectrum are massive, centralized repositories that are constantly being added to; this is a great solution to storing and distributing relatively standardized data such as sequences (e.g., \texttt{GenBank}, \texttt{SRA}) (Table \ref{tab:sql_v_versioneddata}). On the other end are repositories for storing a wide variety of static, stand-alone datasets (\texttt{Dryad}, \texttt{Figshare}, and less optimally, as supplements to research papers)(Table \ref{tab:sql_v_versioneddata}). We suggest there is a substantial middle ground that is not well served by either of these existing paradigms, where a lightweight system for serving versioned datasets is needed.
 
-In this article we i) introduce the concept of Lightweight Versioned Data (LVD) and describe why it is needed; ii) outline how emerging technologies in data science (Table \ref{tab:technologies}) can be leveraged to help researchers maintain, distribute, and access small to medium sized datasets; and iii) introduce a new R package called \texttt{datastorr}, an implementation of a LVD system. While we emphasize particular technologies in our implementation, the principles are general and could easily be ported to other platforms. Furthermore, our backgrounds in the life sciences (and ecology and evolution, in particular); however, we argue that the issues we identify and the solutions we put forward are likely to be relevant to a wide variety of domains, across the natural and social sciences.
+In this article we i) introduce the concept of Versioned Data Delivery (VDD) and describe why it is needed; ii) outline how emerging technologies in data science (Table \ref{tab:technologies}) can be leveraged to help researchers maintain, distribute, and access small to medium sized datasets; and iii) introduce a new R package called \texttt{datastorr}, an implementation of a VDD system. While we emphasize particular technologies in our implementation, the principles are general and could easily be ported to other platforms. Furthermore, our backgrounds in the life sciences (and ecology and evolution, in particular); however, we argue that the issues we identify and the solutions we put forward are likely to be relevant to a wide variety of domains, across the natural and social sciences.
 
 \subsection{Why versioning of data is needed}
 
@@ -126,22 +126,23 @@ fix themselves.
 
 \section{A lightweight, cheap and scalable workflow for versioned data}
 
+DF: Bring out general features more. Right now git delivers this.
 With the growth of open-source tools and collaborative platforms, we believe
 all the features needed for delivering the vision outlined above are now
 present. The workflow we describe below builds off existing platforms and
 combines them in new ways, and offers the potential for
 widespread uptake at little or no cost.
 
-In brief, the workflow we present, which we call Lightweight Versioned Data (LVD), borrows best-practices for software
+In brief, the workflow we present, which we call Versioned Data Delivery (VDD), borrows best-practices for software
 development and applies them to the challenge of maintaining and distributing
 versioned data. Software developers maintain a core set of code which produces
-a binary executable file that can be installed on a users local  computers. With a LVD system, data developers maintain a core set of files, which produce an
+a binary executable file that can be installed on a users local  computers. With a VDD system, data developers maintain a core set of files, which produce an
 organised dataset that can be similarly be ``installed'' on a user's local
 computer. In either the development of software or data, successive versions
 are released over time (called ``releases''). The similarity in workflow
-between sofwtare and data then allows us to deploy the same technological
+between software and data then allows us to deploy the same technological
 platforms that are used in software development, for the development and
-distribution of data. Importantly, LVD uses well-
+distribution of data. Importantly, VDD uses well-
 established and tools, which ensures high-level performance and stability.
 
 The core technologies used are summarised in Table \ref{tab:technologies} and
@@ -217,7 +218,7 @@ Specific features of the \texttt{datastorr} package that make it easy to use inc
 
 \begin{itemize}
   \item \textbf{Speed}: The data packages contain only the code for retrieving the data, not the data itself, and so are quick to install.
-  \item \textbf{Minimal code}: Specific versions of a dataset can be downlaoded in just two lines of code. Installing the package (if not already installed) takes an additional line.
+  \item \textbf{Minimal code}: Specific versions of a dataset can be downloaded in just two lines of code. Installing the package (if not already installed) takes an additional line.
   \item \textbf{Efficient}: On any given machine, each dataset is downloaded only once. It is then stored in a standard directory for R packages, and so is available for offline access.
 \end{itemize}
 
@@ -237,7 +238,7 @@ will be available to the user. And versions can be given a unique DOI
 when appropriate, e.g.~when they are used in a publication.
 
 
-We have created \texttt{datastorr} to make LVD easy to implement and manage for \texttt{R} users. And as we stated above, this has already been used to release a variety of datasets (Table \ref{tab:examples}). However, we can imagine alternative methods for interacting with GitHub and building templates; so while useful, adopting LVD does not critically depend on using \texttt{datastorr}. Furthermore, the concept of LVD is general and we would love to see implementations in \texttt{Python} or other languages. 
+We have created \texttt{datastorr} to make VDD easy to implement and manage for \texttt{R} users. And as we stated above, this has already been used to release a variety of datasets (Table \ref{tab:examples}). However, we can imagine alternative methods for interacting with GitHub and building templates; so while useful, adopting VDD does not critically depend on using \texttt{datastorr}. Furthermore, the concept of VDD is general and we would love to see implementations in \texttt{Python} or other languages.
 
 \section{Discussion}
 
@@ -245,10 +246,10 @@ Topics to consider:
 
 \begin{itemize}
 
-\item Addresses important need, leveraging open source platfroms. Shows power of open source: by writing single new package, can provide global distribution and access to data, with first class system for managing contents.
+\item Addresses important need, leveraging (use) open source platfroms. Shows power of open source: by writing single new package, can provide global distribution and access to data, with first class system for managing contents.
 \item Versioning and open access essential for reproducibility
 \item Versioning should enable better benchmarking of models, also because tests can be automated.
-\item We have focussed on particualr set of tools, but could do similar things with other platfroms or languages.
+\item We have focussed on particular set of tools, but could do similar things with other platforms or languages.
 ....
 \end{itemize}
 
