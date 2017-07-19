@@ -28,7 +28,7 @@ $^*$ Corresponding author: w.cornwell@unsw.edu.au\\
 \usepackage[title,titletoc,toc]{appendix}
 
 \mstype{Article Note}
-\runninghead{Lightweight versioned data}
+\runninghead{Versioned data delivery}
 \keywords{}
 
 \begin{document}
@@ -87,7 +87,7 @@ end to this database is written, often using a platform such as Ruby on rails.
 When designed well, such systems are very useful for updating or adding to a
 dataset. However, the infrastructure investment (designing maintaining, and
 hosting the database) is clearly overkill for most projects and is a very
-substantial barrier to entry. Furthermore, the system requires ongoing funds to maintain it, making it often unsustainable for many groups. Moreover, the existence of a live webserver,
+substantial barrier to entry. Furthermore, the system requires ongoing funds to maintain it, making it often unsustainable for many research groups. Moreover, the existence of a live webserver,
 does not in itself guarantee ongoing access to different versions of a
 dataset.
 
@@ -98,9 +98,9 @@ Examples of big data include genetic datasets, global datasets of species
 observations, and remote sensing data. This size of this data is bigger than
 that which individual research groups can maintain and often requires a
 specialized governmental or non-governmental institution with full-time staff
-to curate and maintain those research resources. We were particularly
-interested in smaller and more specialized problems--the type of datasets that
-a given research group might specialize in. In most of these cases, the data
+to curate and maintain those research resources. Here we are particularly
+interested in smaller and more specialized problems (e.g., cases where a single 
+research group contributes most of the data). In most of these cases, the data
 collected will not be ``big'' but rather small to medium sized. Such data
 support research projects, but are not in most cases general enough to
 establish infra-structure for. But crucially the data themselves will change
@@ -149,6 +149,8 @@ The core technologies used are summarised in Table \ref{tab:technologies} and
 described further below.
 
 \subsection{Version control via `git'}
+
+MP: I think these sections on git would benefit from being turned into paragraphs
 
 \texttt{Git} is a version control system that tracks line-by-line changes in text
 files. Git is used extensively in software development, but is increasingly
@@ -211,8 +213,19 @@ dataset and adding new columns.
 
 \subsection{\texttt{datastorr} and dataset-specific R packages}
 
-While GitHub can host a stream of versioned data releases, many researchers will likely want to be able to access this data programmatically, and ideally, load it directly into their analysis platform. Our solution is for researchers releasing a dataset to write a customized R package, specific to their dataset. For example, the package
-\texttt{baad.data} can retrieve data releases from the Biomass and Allometry Database, stored at \smurl{github.com/dfalster/baad/} (see Table \ref{tab:examples} for more examples). To enable this, we have developed a new R package called \texttt{datastorr}, which does all the heavy lifting both in terms of creating templates for the data-specific R packages and for interacting with the GitHub API. With \texttt{datastorr}, setting up a new data-specific package is straightforward and requires minimal computational skills. 
+GitHub can be used right ``out of the box'' to created versioned data releases
+(ideally following semantic versioning standards). Both database contributors and end users
+can go onto the website and up- or download the latest (or a previous) version of a dataset.
+However, for many use cases, this workflow is not really that efficient. Ideally, researchers
+should be able to access the database programmatically. To this end, we offer a novel solution.
+We have written a R package, \texttt{datastorr}, that a) interacts with the GitHub API to pull 
+down versions of the dataset; and b) constructs the shell of a second, database specific R
+package, which can be used to access a given dataset. Using this system, a researcher can create
+and distribute a R package that facilitates access to her data with (very) minimal computational skills.
+
+
+%While GitHub can host a stream of versioned data releases, many researchers will likely want to be able to access this data programmatically, and ideally, load it directly into their analysis platform. Our solution is for researchers releasing a dataset to write a customized R package, specific to their dataset. For example, the package
+%\texttt{baad.data} can retrieve data releases from the Biomass and Allometry Database, stored at \smurl{github.com/dfalster/baad/} (see Table \ref{tab:examples} for more examples). To enable this, we have developed a new R package called \texttt{datastorr}, which does all the heavy lifting both in terms of creating templates for the data-specific R packages and for interacting with the GitHub API. With \texttt{datastorr}, setting up a new data-specific package is straightforward and requires minimal computational skills. 
 
 Specific features of the \texttt{datastorr} package that make it easy to use include:
 
