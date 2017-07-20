@@ -28,7 +28,7 @@ $^*$ Corresponding author: w.cornwell@unsw.edu.au\\
 \usepackage[title,titletoc,toc]{appendix}
 
 \mstype{Article Note}
-\runninghead{Versioned data delivery}
+\runninghead{Versioned Data Delivery}
 \keywords{}
 
 \begin{document}
@@ -214,44 +214,19 @@ dataset and adding new columns.
 \subsection{\texttt{datastorr} and dataset-specific R packages}
 
 GitHub can be used right ``out of the box'' to created versioned data releases
-(ideally following semantic versioning standards). Both database contributors and end users
-can go onto the website and up- or download the latest (or a previous) version of a dataset.
-However, for many use cases, this workflow is not really that efficient. Ideally, researchers
-should be able to access the database programmatically. To this end, we offer a novel solution.
-We have written a R package, \texttt{datastorr}, that a) interacts with the GitHub API to pull 
-down versions of the dataset; and b) constructs the shell of a second, database specific R
-package, which can be used to access a given dataset. Using this system, a researcher can create
-and distribute a R package that facilitates access to her data with (very) minimal computational skills.
+(ideally following semantic versioning standards). Both database contributors and end users can go onto the website and up- or download the latest (or a previous) version of a dataset. However, for many use cases, this workflow is not really that efficient and may create barriers for reproducibility. Ideally, researchers should be able to access the database programmatically. To this end, we offer a novel solution. We have written a R package, \texttt{datastorr} (\smurl{github.com/richfitz/datastorr}), that a) interacts with the GitHub API to pull down versions of the dataset; and b) constructs the shell of a second, database specific R package, which can be used to access the dataset. Using this system, a researcher can create and distribute a R package that facilitates access to her data with (very) minimal computational skills.
 
+For example, \texttt{datastorr} was used to build the package \texttt{baad.data} (\smurl{github.com/dfalster/baad.data}), which is an interface to the Biomass and Allometry Database (BAAD) stored at \smurl{github.com/dfalster/baad}. \texttt{baad.data} consists of only a few simple functions, that were automatically generated (along with the associated help files) with \texttt{datastorr}. And importantly \texttt{baad.data} contains no actual data so is very quick to install and takes up virtually no space on the user's harddrive. When the function \texttt{baad.data::baad_data()} is called, the system will download the latest version; if there have not been any changes since the last time the function was called, it will simply retrieve the data from memory, making the system very efficient (and also allowing the system to work seamlessly if the computer is offline). If a researcher requires an older version of BAAD, perhaps to reproduce an analysis, specifying the version number of the data as an argument in \texttt{baad.data::baad_data()} will retrieve and store this, without overwriting any other dataset versions they may have previously downloaded.
 
-%While GitHub can host a stream of versioned data releases, many researchers will likely want to be able to access this data programmatically, and ideally, load it directly into their analysis platform. Our solution is for researchers releasing a dataset to write a customized R package, specific to their dataset. For example, the package
-%\texttt{baad.data} can retrieve data releases from the Biomass and Allometry Database, stored at \smurl{github.com/dfalster/baad/} (see Table \ref{tab:examples} for more examples). To enable this, we have developed a new R package called \texttt{datastorr}, which does all the heavy lifting both in terms of creating templates for the data-specific R packages and for interacting with the GitHub API. With \texttt{datastorr}, setting up a new data-specific package is straightforward and requires minimal computational skills. 
+Using \texttt{datastorr}, researchers can set up their own versioned database (and R package) simply by providing: 1) a github repository name (e.g., ``traitecoevo/taxonlookup''); 2) a single file that will contain the versioned data (e.g., ``taxonlookup.csv''); 3) and the function used to load this into \texttt{R} (e.g., \texttt{read.csv()}).
 
-Specific features of the \texttt{datastorr} package that make it easy to use include:
-
-\begin{itemize}
-  \item \textbf{Speed}: The data packages contain only the code for retrieving the data, not the data itself, and so are quick to install.
-  \item \textbf{Minimal code}: Specific versions of a dataset can be downloaded in just two lines of code. Installing the package (if not already installed) takes an additional line.
-  \item \textbf{Efficient}: On any given machine, each dataset is downloaded only once. It is then stored in a standard directory for R packages, and so is available for offline access.
-\end{itemize}
-
-[MWP: moved this from discussion]
-To set up a
-living dataset you need to provide:
-\begin{enumerate}
-  \item a github repository name (e.g.~`wcornwell/taxonlookup`, `traitecoevo/baad.data`).
-  \item A single file that will be the versioned dataset (e.g. \texttt{plant\_lookup.csv} or \texttt{baad\_data.zip}).
-  \item A function to load that data into R:(e.g.~a simple wrapper around \texttt{read.csv}).
-\end{enumerate}
-
-Then as the data changes (hopefully improves) with time, update the data
+Then as the data changes (and hopefully improves) with time, update the data
 file and create a github release with a new version number (preferably
 using \href{http://semver.org/}{semantic versioning}). All the versions
 will be available to the user. And versions can be given a unique DOI
 when appropriate, e.g.~when they are used in a publication.
 
-
-We have created \texttt{datastorr} to make VDD easy to implement and manage for \texttt{R} users. And as we stated above, this has already been used to release a variety of datasets (Table \ref{tab:examples}). However, we can imagine alternative methods for interacting with GitHub and building templates; so while useful, adopting VDD does not critically depend on using \texttt{datastorr}. Furthermore, the concept of VDD is general and we would love to see implementations in \texttt{Python} or other languages.
+We have created \texttt{datastorr} to make VDD easy to implement and manage for \texttt{R} users. And as we stated above, this has already been used to release a variety of datasets (Table \ref{tab:examples}). However, we can imagine alternative methods for interacting with GitHub and building templates and adopting a VDD system does not critically depend on using \texttt{datastorr}. Indeed, we would love to see implementations in \texttt{Python} or other languages.
 
 \section{Discussion}
 
