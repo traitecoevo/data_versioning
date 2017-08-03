@@ -145,7 +145,7 @@ Because \texttt{git} was built from the ground up for tracking changes in code, 
 
 There are many current platforms for storing and distributing versioned controlled data for low or no cost.  The website GitHub (\smurl{www.github.com}) is a commercial platform for hosting and interacting with git repositories. In practice, each dataset should be a separate git repository on github (see Table \ref{tab:examples} for examples). Although mainly used for computer code, Github is now also being use to manage scientific data \citep{Perkel-2016}. Maintaining the version controlled data in the cloud has two main benefits: first, it provides a platform for multiple data contributors to sync their files and correspond about changes in the dataset, and second, it hosts a stream of data releases, thus acting as a central point for  the collection, curation, and distribution of the data.
 
-\subsection{Allowing for one or more data contributers}
+\subsection{Potential for collaboration: allowing for one or more data contributors}
 
 TODO: turn this into a paragraph
 
@@ -183,8 +183,13 @@ will be available to the user.
 We have created \texttt{datastorr} to make VDD easy to implement and manage for \texttt{R} users. And as we stated above, this has already been used to release a variety of datasets (Table \ref{tab:examples}). However, we can imagine alternative methods for interacting with GitHub and building templates and adopting a VDD system does not critically depend on using \texttt{datastorr}. Indeed, we would love to see implementations in \texttt{Python} or other languages.
 
 \section{Discussion}
+% General problem. An example of solution. Key features
 
-Many of the key roadblocks preventing a switch from a static to a dynamic data world, were technological: in the past it took great deal of money and expertise to set up a VDD system. The proliferation of cloud--based tools and open--source software have now reduced these roadblocks considerably.  We argue that by linking together the tools described above, researches can now produce, curate and distribute versioned data much more easily and cheaply than in the past.  
+The problem of tracking data through time and versions is likely to be widespread. There are many alternate solutions, with associated features and drawbacks.  The current structure of scientific research is very distributed, with research groups across the world working on the same question.  Moreover at a time of funding scarcity, many world-class research groups do not have excess funds to hire and support technology specialists.  As such we argue that there is a niche for a easy, cheap, and flexible VDD system.  
+
+Many of the key roadblocks preventing a switch from a static to a dynamic data world, were technological: in the past it took great deal of money and expertise to set up a VDD system. The proliferation of cloud--based tools and open--source software have now reduced these roadblocks considerably.  We argue that by linking together the tools described above, researchers can now produce, curate and distribute versioned data much more easily and cheaply than in the past.  
+
+The key features of a VDD system that are already possible are a versioning system to communicate small and large changes to users, both point-and-click and code-based access to all versions, reliable distribution to many users, and stable, organized DOIs.  Moreover, it is relatively easy to update and add new versions.  Technology is moving forward rapidly and so it is very likely that the particular tools we describe above will add features and be even easier to use.  But nonetheless, workable systems are already possible.  
 
 
 
