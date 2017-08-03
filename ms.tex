@@ -52,9 +52,9 @@ The sharing and re-use of data has become a cornerstone of modern science. To da
 
 \section{Introduction}
 
-Data is now a first-class scientific product, as is evidenced by the advent of this journal \cite{Editorial-2014}. Increasingly, funding bodies, publishers, and scientific social norms are both requiring data to be published alongside research publications and recognizing the value of producing and sharing data without any accompanying analyses \cite[e.g.][]{Whitlock-2011,Fairbairn-2011,Piwowar-2011,VanNoorden-2013,Gibney-2013}. This has been a rapid, and exciting, sea change and the scientific community is still grappling with how best to disseminate data and credit data creators and aggregators \cite{Whitlock-2011, Goodman-2014, Lowndes-2017,Perkel-2016,VanNoorden-2013, Kratz-2015}. One thing that is clear is that there is no single best solution for managing and distributing data, as data types and use is incredibly heterogeneous. At one end of the spectrum are massive, centralized repositories that are constantly being added to; this is a great solution to storing and distributing relatively standardized data such as sequences (e.g., \texttt{GenBank}, \texttt{SRA}) (Table \ref{tab:sql_v_versioneddata}). At the other end are repositories for storing a wide variety of static, stand-alone datasets (eg. \texttt{Dryad}, \texttt{Figshare}, and \texttt{Zenodo}; or less optimally, as supplements to research papers)(Table \ref{tab:sql_v_versioneddata}). We suggest there is a substantial middle ground that is not well served by either of these existing paradigms, where a lightweight system for serving versioned datasets is needed.
+Data is now a first-class scientific product, as is evidenced by the advent of this journal (\cite{Editorial-2014}). Increasingly, funding bodies, publishers, and scientific social norms are both requiring data to be published alongside research publications and recognizing the value of producing and sharing data without any accompanying analyses \cite[e.g.][]{Whitlock-2011,Fairbairn-2011,Piwowar-2011,VanNoorden-2013,Gibney-2013}. This has been a rapid, and exciting, sea change and the scientific community is still grappling with how best to disseminate data and credit data creators and aggregators \cite{Whitlock-2011, Goodman-2014, Lowndes-2017,Perkel-2016,VanNoorden-2013, Kratz-2015}. One thing that is clear, however, is that there is no single best solution for managing and distributing data, as data types and use is incredibly heterogeneous. At one end of the spectrum are massive, centralized repositories that are constantly being added to; this is a great solution to storing and distributing relatively standardized data such as sequences (e.g., \texttt{GenBank}, \texttt{SRA}) (Table \ref{tab:sql_v_versioneddata}). At the other end are repositories for storing a wide variety of static, stand-alone datasets (eg. \texttt{Dryad}, \texttt{Figshare}, and \texttt{Zenodo}; or less optimally, as supplements to research papers) (Table \ref{tab:sql_v_versioneddata}). We suggest there is a substantial middle ground that is not well served by either of these existing paradigms, where a lightweight system for serving versioned datasets is needed.
 
-In this article we i) introduce the concept of Versioned Data Delivery (\textsc{vdd}) and describe why it is needed; ii) outline how emerging technologies in data science (Table \ref{tab:technologies}) can be used to help researchers maintain, distribute, and access small-to-medium sized datasets; and iii) introduce a new \textsc{R} package called \texttt{datastorr}, an implementation of a \textsc{vdd} system. While we emphasize particular technologies in our implementation, the principles are general and could easily be ported to other platforms. While the examples cited here are in ecology and evolution; the issues identified and the solutions put forward are relevant to nearly all data-oriented scientific domains.
+In this article we i) introduce the concept of Versioned Data Delivery (\textsc{vdd}) and describe why it is needed; ii) outline how emerging technologies in data science (Table \ref{tab:technologies}) can be used to help researchers maintain, distribute, and access small-to-medium sized datasets; and iii) introduce a new \textsc{R} package called \texttt{datastorr}, an implementation of a \textsc{vdd} system. While we emphasize particular technologies in our implementation, the principles are general and could easily be ported to other platforms. Likewise, the examples cited here come from our own research areas, ecology and evolutionary biology, but we argue that the issues we have identified and the solutions we have put forward are relevant to nearly all data-oriented scientific domains.
 
 \subsection{Why versioning of data is needed and difficult}
 
@@ -69,7 +69,7 @@ between the canonical (or master) dataset and the new analysis (and publication)
 making reproducibility of the new analysis more difficult than it needs
 to be. If the canonical dataset is versioned--and versions are
 accessible--the up-to-date data can be distributed, used, and analyses
-based on any of the released versions data can be reproduced.  
+based on any of the previously released versions data can be reproduced.  
 
 While the benefits of versioned data are fairly clear, determining how to implement it has been contentious . The static model of data distribution widely used in science, where datasets are archived either as supplementary materials for a journal article
 or under its own Digital Object Identifier (\textsc{doi}), is simply not designed to provide streams of versioned
@@ -137,7 +137,7 @@ The core technologies used are summarised in Table \ref{tab:technologies} and de
 
 \subsection{Version control}
 
-Version control, primarily an open-source variety called \texttt{git}, has become ubiquitous in software development.  Essentially version control tracks line-by-line changes in text files and creates and maintains a history of those changes. Increasingly version control has been applied to scientific code and data management, especially for small-to-medium sized datasets \citep{Ram-2013, Perkel-2016}. Git is attractive for data management because it tracks all changes in monitored files. This history is visible to anyone interacting with the repository. It also allows users to annotate changes (`commits') with informative messages detailing the rationale for those changes.
+Version control, primarily an open-source variety called \texttt{git}, has become ubiquitous in software development.  Essentially version control tracks line-by-line changes in text files and creates and maintains a history of those changes. Increasingly version control has been applied to scientific code and data management, especially for small-to-medium sized datasets \citep{Ram-2013, Perkel-2016}. \texttt{git} is attractive for data management because it tracks all changes in monitored files. This history is visible to anyone interacting with the repository. It also allows users to annotate changes (`commits') with informative messages detailing the rationale for those changes.
   
 Because \texttt{git} was built for tracking changes in code, there are aspects of how it behaves that are not natural to apply to  data \cite{Perkel-2016}.  For example, because it tracks changes line-by-line rather than cell-by-cell, there are inefficiencies in how the software stores the changes.  There is rapid current work on this problem and prototypes available, and as such, it is likely that \texttt{git} for data will replaced by a more natural system for data in the near future  \citep{Fli, Dat}.  This future system would be faster computationally, smaller in file size, flexible with respect to data structures, and thus allow for larger datasets to be versioned efficiently.  That said, the workflow we describe here currently works well with \texttt{git} and should work even more quickly with its future replacement.
 
@@ -150,10 +150,6 @@ There are many current platforms for storing and distributing versioned controll
 TODO turn this into a paragraph about collaboration
 
 \textbf{Pull requests}: Much of the activity on \texttt{GitHub} is on open-source projects with many contributors. An essential feature that of sending a pull request, whereby a would-be contributor submits prospective changes to be incorporated.
-
-\subsection{Cloud platforms for storing and distributing version controlled data}
-
-There are many current platforms for storing and distributing versioned controlled data for low or no cost.  The website \texttt{GitHub} (\smurl{www.github.com}) is a commercial platform for hosting and interacting with git repositories. In practice, each dataset should be a separate git repository on \texttt{GitHub} (see Table \ref{tab:examples} for examples). Although mainly used for computer code, \texttt{GitHub} is now also being use to manage scientific data \citep{Perkel-2016}. Maintaining the version controlled data in the cloud has two main benefits: first, it provides a platform for multiple data contributors to sync their files and correspond about changes in the dataset, and second, it hosts a stream of data releases, thus acting as a central point for  the collection, curation, and distribution of the data.
 
 \subsection{`Semantic' versioning}
 
@@ -240,7 +236,7 @@ The key features of a \textsc{vdd} system that are already possible are a versio
 %basics of R packages}.
 
 
-\subsection{Conclusion}
+%\subsection{Conclusion}
 
 
 
