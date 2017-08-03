@@ -1,2 +1,6 @@
 ms.pdf
 versioned_data_template
+.Rhistory
+.DS_Store
+.remake/
+thoughts
