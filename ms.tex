@@ -67,7 +67,7 @@ between the canonical (or master) dataset and the new analysis (and publication)
 making reproducibility of the new analysis more difficult than it needs
 to be. If the canonical dataset is versioned--and versions are
 accessible--the up-to-date data can be distributed, used, and analyses
-based on any of the released versions data can be reproduced.
+based on any of the released versions data can be reproduced.  
 
 While the benefits of versioned data are fairly clear, determining how to implement it has been contentious . The static model of data distribution widely used in science, where datasets are archived either as supplementary materials for a journal article
 or under its own DOI, is simply not designed to provide streams of versioned
@@ -137,7 +137,7 @@ The core technologies used are summarised in Table \ref{tab:technologies} and de
 
 Version control, primarily an open-source variety called \texttt{git}, has become ubiquitous in software development.  Essentially version control tracks line-by-line changes in text files and creates and maintains a history of those changes. Increasingly version control has been applied to scientific code and data management, especially for small-to-medium sized datasets \citep{Ram-2013, Perkel-2016}. Git is attractive for data management because it tracks all changes in monitored files. This history is visible to anyone interacting with the repository. It also allows users to annotate changes (`commits') with informative messages detailing the rationale for those changes.
   
-Because \texttt{git} was built for tracking changes in code, there are aspects of how it behaves that are not natural to apply to  data \cite{Perkel-2016}.  For example, because it tracks changes line-by-line rather than cell-by-cell, there are inefficiencies in how the software stores the changes.  There is rapid current work on this problem and prototypes available, and as such, it is likely that \texttt{git} for data will replaced by a more natural system for data in the near future (REF).  This future system would be faster computationally, smaller in file size, and thus allow for larger datasets to be versioned efficiently.  That said, the workflow we describe here currently works well with \texttt{git} and should work more smoothly with its future replacement.
+Because \texttt{git} was built for tracking changes in code, there are aspects of how it behaves that are not natural to apply to  data \cite{Perkel-2016}.  For example, because it tracks changes line-by-line rather than cell-by-cell, there are inefficiencies in how the software stores the changes.  There is rapid current work on this problem and prototypes available, and as such, it is likely that \texttt{git} for data will replaced by a more natural system for data in the near future  \citep{Fli, Dat}.  This future system would be faster computationally, smaller in file size, flexible with respect to data structures, and thus allow for larger datasets to be versioned efficiently.  That said, the workflow we describe here currently works well with \texttt{git} and should work even more quickly with its future replacement.
 
 \subsection{Cloud platforms for storing and distributing version controlled data}
 
@@ -145,9 +145,11 @@ There are many current platforms for storing and distributing versioned controll
 
 \subsection{Potential for collaboration: allowing for one or more data contributors}
 
-TODO: turn this into a paragraph
-
 \textbf{Pull requests}: Much of the activity on GitHub is on open-source projects with many contributors. An essential feature that of sending a pull request, whereby a would-be contributor submits prospective changes to be incorporated.
+
+\subsection{Cloud platforms for storing and distributing version controlled data}
+
+There are many current platforms for storing and distributing versioned controlled data for low or no cost.  The website GitHub (\smurl{www.github.com}) is a commercial platform for hosting and interacting with git repositories. In practice, each dataset should be a separate git repository on github (see Table \ref{tab:examples} for examples). Although mainly used for computer code, Github is now also being use to manage scientific data \citep{Perkel-2016}. Maintaining the version controlled data in the cloud has two main benefits: first, it provides a platform for multiple data contributors to sync their files and correspond about changes in the dataset, and second, it hosts a stream of data releases, thus acting as a central point for  the collection, curation, and distribution of the data.
 
 \subsection{`Semantic' versioning}
 
@@ -156,7 +158,7 @@ To fully realize the benefits of a versioned data, the VDD system needs to be co
 \subsection{Digital object identifiers}
 
 
-Tools for creating and archiving digital objects have seen rapid progress in recent years.  At present, each version of the dataset can be automatically archived and assigned a DOI, via several providers (Table \ref{tab:doi_minting}).  Here we describe the particular integration of github and zenodo.  
+Tools for creating and archiving digital objects have seen rapid progress in recent years.  At present, each version of the dataset can be automatically archived and assigned a DOI, via several providers (Table \ref{tab:doi_minting}).  Here we describe the particular integration of github and zenodo.  It is useful to have the ability to either be specific---reference a parti
 
 TODO: FLESH THIS OUT AND ADD REFERENCE TO BLOG POST AND OTHER THINKING ON THIS
 
@@ -171,7 +173,7 @@ A point-and-click workflow may create barriers for reproducibility \cite{Wilson-
 
 For example, \texttt{datastorr} was used to build the package \texttt{baad.data} (\smurl{github.com/dfalster/baad.data}), which is an interface to the Biomass and Allometry Database (BAAD) stored at \smurl{github.com/dfalster/baad}. \texttt{baad.data} consists of only a few simple functions, that were automatically generated (along with the associated help files) with \texttt{datastorr}. And importantly \texttt{baad.data} contains no actual data so is very quick to install and takes up virtually no space on the user's harddrive. When the function \texttt{baad.data::baad\_data()} is called, the system will download the latest version; if there have not been any changes since the last time the function was called, it will simply retrieve the data from memory, making the system very efficient (and also allowing the system to work seamlessly if the computer is offline). If a researcher requires an older version of BAAD, perhaps to reproduce an analysis, specifying the version number of the data as an argument in \texttt{baad.data::baad\_data()} will retrieve and store this, without overwriting any other dataset versions they may have previously downloaded.
 
-Using \texttt{datastorr}, researchers can set up their own versioned database (and R package) simply by providing: 1) a github repository name (e.g., ``traitecoevo/taxonlookup''); 2) a single file that will contain the versioned data (e.g., ``taxonlookup.csv''); 3) and the function used to load this into \texttt{R} (e.g., \texttt{read.csv()}). A tutorial explaining precisely how to set this up is available at \smurl{github.com/richfitz/datastorr}. % is this t
+Using \texttt{datastorr}, researchers can set up their own versioned database (and R package) simply by providing: 1) a github repository name (e.g., ``traitecoevo/taxonlookup''); 2) a single file that will contain the versioned data (e.g., ``taxonlookup.csv''); 3) and the function used to load this into \texttt{R} (e.g., \texttt{read.csv()}). A tutorial explaining precisely how to set this up is available at \smurl{github.com/richfitz/datastorr}. % is this the right site?  ropensci?
 
 Then as the data changes (and hopefully improves) with time, update the data
 file and create a github release with a new version number (preferably
@@ -187,7 +189,7 @@ The problem of tracking data through time and versions is likely to be widesprea
 
 Many of the key roadblocks preventing a switch from a static to a dynamic data world, were technological: in the past it took great deal of money and expertise to set up a VDD system. The proliferation of cloud--based tools and open--source software have now reduced these roadblocks considerably.  We argue that by linking together the tools described above, researchers can now produce, curate and distribute versioned data much more easily and cheaply than in the past.  
 
-The key features of a VDD system that are already possible are a versioning system to communicate small and large changes to users, both point-and-click and code-based access to all versions, reliable distribution to many users, and stable, organized DOIs.  Moreover, it is relatively easy to update and add new versions.  Technology is moving forward rapidly and so it is very likely that the particular tools we describe above will add features and be even easier to use.  But nonetheless, workable systems are already possible.  
+The key features of a VDD system that are already possible are a versioning system to communicate small and large changes to users, both point-and-click and code-based access to all versions, reliable distribution to many users, and stable, organized DOIs.  Moreover, it is relatively easy to update and add new versions.  Technology is moving forward rapidly and so it is very likely that the particular tools we describe above will add features and be even easier to use.  But, nonetheless, workable systems are already possible.  
 
 
 
