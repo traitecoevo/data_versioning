@@ -46,9 +46,7 @@ $^*$ Corresponding author: w.cornwell@unsw.edu.au\\
 
 \section{Summary}
 
-The sharing and re-use of data has become a cornerstone of modern science. To date, the curation and distribution of data has largely been conducted under one of two frameworks: data is either deposited in large, collaborative databases (often run by institutions and staffed by computational professionals) or else published as static files alongside a specific publication or as a standalone product released by a research group. For most medium-sized datasets, the former is clearly overkill and likely unwieldly and unsustainable and the latter, while convenient, is rather limited as it does not allow the dataset to improve nor to grow over time. This suggests is a substantial conceptual and technological gap in how we curate and share data. In this article, we argue that adopting the paradigm of versioned data, analogous to software versioning, can help fill this gap. We introduce a system called Versioned Data Delivery (VDD) and present novel computational tools to make creating, archiving, and distributing versioned data easily, quickly and cheaply. These new tools allow for individual research groups to shift from a static model of data curation to a dynamic and versioned model that naturally matches the scientific process.
-
-%Sharing data has become a key part of reproducible workflows in science.  To help this process, numerous linked tools have been developed to allow quick and easy data sharing.  Thus far, however, data has been largely considered a fixed and unchanging product---the particular data file for a particular analysis can be quickly unloaded, given a digital identifier, and shared.  While this is highly useful, this framework does not account for on-going scientific progress: for many important problems, epitomised by problems that lead to meta-analysis, datasets will continue to grow with time---more data points will be added, and new and more useful data structures will be created.  Essentially this means that data, like science in general, progress with time.  We suggest that a versioning system for data will facilitate this process.  Moreover, while the idea of versioned data has been taken up by large data sharing organizations, we present new tools for creating, archiving, and distributing versioned data easily, quickly and cheaply.  These new tools allow for individual research groups to shift from a static model of data curation to a dynamic and versioned model that naturally matches the scientific process.
+The sharing and re-use of data has become a cornerstone of modern science. To date, the curation and distribution of data has largely been conducted under one of two frameworks: data is either deposited in large, collaborative databases (often run by institutions and staffed by computational professionals) or else published as static files alongside a specific publication or as a standalone product released by a research group. For most medium-sized datasets, the former is clearly overkill and likely unwieldy and unsustainable, and the latter -- while convenient -- is rather limited as it does not allow the dataset to improve nor to grow over time. This indicates a substantial conceptual and technological gap in how we curate and share data. In this article, we argue that adopting the paradigm and processes for versioned data, analogous to software versioning, can help fill this gap. We introduce a system called Versioned Data Delivery (VDD) and present novel computational tools for creating, archiving, and distributing versioned data easily, quickly, and cheaply. These new tools allow for individual research groups to shift from a static model of data curation to a dynamic and versioned model that naturally matches the scientific process.
 
 \section{Introduction}
 
@@ -82,7 +80,7 @@ inevitably be found, and there needs to be some easy  way to correct them and
 distribute the updated dataset.
 
 To overcome the limitations of static datasets, many research groups have
-setup dedicated webservers to host and distribute data. In these systems,
+setup dedicated webservers to host and distribute data (Table 1)\citep[e.g.][]{Madin-2016}. In these systems,
 datasets areas maintained in a structure database, such as SQL, and a front
 end to this database is written, often using a platform such as Ruby on rails.
 When designed well, such systems are very useful for updating or adding to a
@@ -119,17 +117,9 @@ there would also be a way for users to also become contributors, by flagging
 errors for the curator to correct in the next release, or even for the user to
 fix themselves.
 
-% For small datasets, it is simply not possible to use the same tools developed for
-% big data: there are a number of high-setup-cost options (stand-alone
-% websites, \textsc{api}s), which have advantages if you have the resources to
-% develop and maintain them. We wanted a relatively low cost way (both in
-% money and time).
-
 \section{Results}
 
-\subsection{A lightweight, cheap and scalable workflow for versioned data}
-
-% DF: Bring out general features more. Right now git delivers this. With the growth of open-source tools and collaborative platforms, we believe all the features needed for delivering the vision outlined above are now present. The workflow we describe below builds off existing platforms and combines them in new ways, and offers the potential for widespread uptake at little or no cost.
+\subsection{A lightweight, cheap, and scalable workflow for versioned data}
 
 In brief, the workflow we present, which we call Versioned Data Delivery (\textsc{vdd}), borrows best-practices for software development \cite{Perez-Riverol-2016} and applies them to the challenge of maintaining and distributing versioned data. Software developers maintain a core set of code which produces a binary executable file that can be installed on a users local  computers. With a \textsc{vdd} system, data developers maintain a core set of files, which produce an organised dataset that can be similarly be ``installed'' on a user's local computer. In either the development of software or data, successive versions are released over time (called ``releases''). The similarity in workflow between software and data then allows us to deploy the same technological platforms that are used in software development, for the development and distribution of data. Importantly, our \textsc{vdd} systems uses well-established tools, ensuring high-level performance and stability.
 
@@ -143,13 +133,11 @@ Because \texttt{git} was built for tracking changes in code, there are aspects o
 
 \subsection{Cloud platforms for storing and distributing version controlled data}
 
-There are many current platforms for storing and distributing versioned controlled data for low or no cost.  The website \texttt{GitHub} (\smurl{www.github.com}) is a commercial platform for hosting and interacting with git repositories. In practice, each dataset should be a separate git repository on \texttt{GitHub} (see Table \ref{tab:examples} for examples). Although mainly used for computer code, \texttt{GitHub} is now also being use to manage scientific data \citep{Perkel-2016}. Maintaining the version controlled data in the cloud has two main benefits: first, it provides a platform for multiple data contributors to sync their files and correspond about changes in the dataset, and second, it hosts a stream of data releases, thus acting as a central point for  the collection, curation, and distribution of the data.
+There are many current platforms for storing and distributing versioned controlled data for low or no cost.  The website \texttt{GitHub} (\smurl{www.github.com}) is a commercial platform for hosting and interacting with \texttt{git} repositories. In practice, each dataset should be a separate \texttt{git} repository on \texttt{GitHub} (see Table \ref{tab:examples} for examples). Although mainly used for computer code, \texttt{GitHub} is now also being use to manage scientific data \citep{Perkel-2016}. Maintaining the version controlled data in the cloud has two main benefits: first, it provides a platform for multiple data contributors to sync their files and correspond about changes in the dataset, and second, it hosts a stream of data releases, thus acting as a central point for  the collection, curation, and distribution of the data.
 
-\subsection{Potential for collaboration: allowing for one or more data contributors}
+\subsection{Potential for collaboration: allowing for multiple data contributors}
 
-TODO turn this into a paragraph about collaboration
-
-\textbf{Pull requests}: Much of the activity on \texttt{GitHub} is on open-source projects with many contributors. An essential feature that of sending a pull request, whereby a would-be contributor submits prospective changes to be incorporated.
+One of the greatest benefits of using \texttt{git} for development of open-source software has been the way it encourages contributions from multiple individuals working simultaneously, and even individuals from outside the initial group of project participants \citep{Rogers-2013}. This is enabled via the distributed and decentralised nature of \texttt{git} repositories. Because it tracks changes line-by-line, multiple users can make changes to different parts of the code (data) and the \texttt{git} system will seamlessly integrate these together (if that is possible), or, when needed, flag where there are conflicts that need to be resolved. This makes collaboration easy. For open-source projects, external parties are also welcome to copy (in \texttt{git} speak ``clone'' or ``fork'') a repository, make their own modifications and send these back to the project maintainers to be reviewed and potentially included in the project. This process is called submitting a ``Pull request''. One of the potential advantages of moving the workflow for managing data onto \texttt{GitHub} is the potential for seamless collaboration and for receiving pull requests from contributors \citep{Perkel-2016}.
 
 \subsection{`Semantic' versioning}
 
@@ -168,7 +156,7 @@ For example, \texttt{datastorr} was used to build the package \texttt{baad.data}
 
 Using \texttt{datastorr}, researchers can set up their own versioned database (and R package) simply by providing: 1) a \texttt{GitHub} repository name (e.g., ``traitecoevo/taxonlookup''); 2) a single file that will contain the versioned data (e.g., ``taxonlookup.csv''); 3) and the function used to load this into \texttt{R} (e.g., \texttt{read.csv()}). A tutorial explaining precisely how to set this up is available at \smurl{github.com/ropenscilabs/datastorr}.
 
-Then as the dataset grows over time, researchers update the git repo and create a \texttt{GitHub} release with a new version number (preferably
+Then as the dataset grows over time, researchers update the \texttt{git} repo and create a \texttt{GitHub} release with a new version number (preferably
 using \href{http://semver.org/}{semantic versioning}). All the versions
 will be available to the user. 
 
@@ -176,68 +164,16 @@ We have created \texttt{datastorr} to make \textsc{vdd} easy to implement and ma
 
 \subsection{Digital object identifiers}
 
-Systematically archiving data is a key part of good workflow \citep{Wilkinson-2016, Piwowar-2011, Whitlock-2011}, and tools for creating and archiving digital objects have seen rapid progress in recent years.  At present, each version of the dataset can be automatically archived and assigned a \textsc{doi}, via several providers (Table \ref{tab:doi_minting}).  Here we describe the particular integration of \texttt{GitHub} and \texttt{Zenodo}.  It is useful to have the ability to either be specific---reference a particular version for the purposes of reproducibility or general--reference the entire project.  \texttt{Zenodo} currently automatically supplies both ``concept'' and ``version'' \textsc{doi}'s to the commits associated with \texttt{GitHub} releases automatically \citep[Figure \ref{fig:semantic} and ][]{Nielsen-2017}.  This allows users to very precisely reference either generally or specifically, both of which may be appropriate in different situations.  There is an unresolved issue about properly allocating credit to authors for these citations, and we hope that the large citation mapping services (Web of Science and Google Scholar) will adapt to the community standard once the research community settles on best archiving practices for versioned data.
+Systematically archiving data is a key part of good workflow \citep{Wilkinson-2016, Piwowar-2011, Whitlock-2011}, and tools for creating and archiving digital objects have seen rapid progress in recent years.  At present, each version of the dataset can be automatically archived and assigned a \textsc{doi}, via several providers (Table \ref{tab:doi_minting}).  Here we describe the particular integration of \texttt{GitHub} and \texttt{Zenodo}.  It is useful to have the ability to either be specific---reference a particular version for the purposes of reproducibility or general--reference the entire project.  \texttt{Zenodo} currently automatically supplies both ``concept'' and ``version'' \textsc{doi}'s to the commits associated with \texttt{GitHub} releases automatically \citep[Figure \ref{fig:semantic} and ][]{Nielsen-2017}.  This allows users to very precisely reference either generally or specifically, both of which may be appropriate in different situations.  There is an unresolved issue about properly allocating credit to authors for these citations, and we hope that the large citation mapping services (\texttt{Web of Science} and \texttt{Google Scholar}) will adapt to the community standard once the research community settles on best archiving practices for versioned data.
 
 \section{Discussion}
 % General problem. An example of solution. Key features
 
 The problem of tracking data through time and versions is likely to be widespread. There are many alternate solutions, with associated features and drawbacks.  The current structure of scientific research is very distributed, with research groups across the world working on the same question.  Moreover at a time of funding scarcity, many world-class research groups do not have excess funds to hire and support technology specialists.  As such we argue that there is a niche for a easy, cheap, and flexible \textsc{vdd} system.
 
-Many of the key roadblocks preventing a switch from a static to a dynamic data world, were technological: in the past it took great deal of money and expertise to set up a \textsc{vdd} system. The proliferation of cloud--based tools and open--source software have now reduced these roadblocks considerably.  We argue that by linking together the tools described above, researchers can now produce, curate and distribute versioned data much more easily and cheaply than in the past.
+Many of the key roadblocks preventing a switch from a static to a dynamic data world, were technological: in the past it took great deal of money and expertise to set up a \textsc{vdd} system. The proliferation of cloud--based tools and open--source software have now reduced these roadblocks considerably.  We argue that by linking together the tools described above, researchers can now produce, curate, and distribute versioned data much more easily and cheaply than in the past.
 
 The key features of a \textsc{vdd} system that are already possible are a versioning system to communicate small and large changes to users, both point-and-click and code-based access to all versions, reliable distribution to many users, and stable, organized \textsc{doi}s.  Moreover, it is relatively easy to update and add new versions.  Technology is moving forward rapidly and so it is very likely that the particular tools we describe above will add features and be even easier to use.  But, nonetheless, workable systems are already possible.
-
-
-
-%Topics to consider:
-%
-%\begin{itemize}
-%
-%\item Addresses important need, using open source platforms. Shows power of open source: by writing single new package, can provide global distribution and access to data, with first class system for managing contents.
-%\item Versioning and open access essential for reproducibility
-%\item Versioning should enable better benchmarking of models, also because tests can be automated.
-%\item We have focussed on particular set of tools, but could do similar things with other platforms or languages.
-%....
-%\end{itemize}
-
-
-
-%(old content unchanged)
-%
-%One of the key problems in switching from a static to a dynamic data
-%world, is that it's currently hard to set up and maintain a system like
-%this. Ideally using a versioned database should be easy for both the
-%user and the data maintainer. This is especially crucial is the data
-%maintainers are busy. Moreover, old versions need to be preserved in a
-%stable and accessible way.
-%
-%To try and achieve to above goals, we built a system to distribute
-%versions of our datasets. We think that with this infrastructure, it is
-%relatively easy to set up and maintain a versioned system with any
-%small-to-medium sized dataset.
-%
-%In our system, the data is downloaded only once per computer, available
-%for offline access, easy to port to other platforms, and can get a \textsc{doi}
-%when desired (i.e.~when it's used for a publication). All old versions
-%are accessible.
-%
-%
-%
-%\subsection{How much expertise is needed to setup and use?}
-%
-%To use a versioned dataset: Very very basic \texttt{R}. With 4 lines of \texttt{R} code, you can
-%have the data downloaded and loaded into R and ready for use.
-%
-%To set a system like this up: Basically there are two general skills required: 1) understanding
-%version control via \texttt{git} and 2) writing a very simple R package.
-%From the prolific Hadley Wickham there is a
-%\href{http://r-pkgs.had.co.nz/git.html}{very clear introduction to git}
-%and \href{http://r-pkgs.had.co.nz/intro.html}{an instruction to the
-%basics of R packages}.
-
-
-%\subsection{Conclusion}
-
 
 
 \newpage
@@ -255,13 +191,13 @@ The key features of a \textsc{vdd} system that are already possible are a versio
   \textbf{} & (e.g. \smurl{datadryad.org})& (e.g. \smurl{coraltraits.org}) & (eg. \texttt{datastorr} via \texttt{GitHub})\\
   \hline
    Webserver        & bespoke & bespoke &  \smurl{github.com}\\
-   Backend          & none & SQL + Ruby-on-rails 			& git + \texttt{datastorr} \\
+   Backend          & none & SQL + Ruby-on-rails 			& \texttt{git} + \texttt{datastorr} \\
    User access      & Web browser & Web browser 				    & Web browser or R \\
    Ease of setup    & Very easy & Hard 							& Easy\\
    Data size        & Up to several Gb & Small-Very large 				& Up to 1Gb\\
    Cost             & Varies & Varies  						& Free \\
    Bandwidth        & Managed by provider & Pro rata 						& Managed by \texttt{GitHub}\\
-   Maintainer skills & None & Ruby + php 					& R + git \\
+   Maintainer skills & None & Ruby + php 					& R + \texttt{git} \\
    User skills      &Web browsing& Web browsing  					& basic R \\
    Versioning       &None& Hard 							& Easy \\
    \textsc{doi} minting      &Automatic & Manual 					& Automatic \\
@@ -277,14 +213,14 @@ The key features of a \textsc{vdd} system that are already possible are a versio
 
 \begin{table}[h!]
 \centering
-\caption{Glossary of technologies used to maintain, store and distribute the Versioned Data Delivery system decsribed in this paper.}
+\caption{Glossary of technologies used to maintain, store, and distribute the Versioned Data Delivery system described in this paper.}
 {\footnotesize
 \vspace{1cm}
   \begin{tabular}{p{5cm}p{10cm}}
   \hline
   \textbf{Technology} & \textbf{Description} \\\hline
    \texttt{git} & Open source version control system used for tracking progressive changes in a set of text files, typically computer code but also data\\
-   github.com & A commercial webplatform for sharing, visualising and managing `git' repositories. Includes ability to browse the `history', `issue' tracking, and ability to create `releases'.\\
+   github.com & A commercial webplatform for sharing, visualising, and managing `git' repositories. Includes ability to browse the `history', `issue' tracking, and ability to create `releases'.\\
   \textsc{API}   & An Application Programming Interface provides a set of protocols for exchanging information.\\
    \texttt{R}     &  Open source statistical and data processing language \\
    \textsc{CRAN}  &  Open source repository of packages for the R language \\
@@ -340,7 +276,7 @@ The key features of a \textsc{vdd} system that are already possible are a versio
   \textbf{Provider} & \textbf{Features} \\ \hline
   \texttt{Zenodo}: \smurl{zenodo.org} & Automated \textsc{doi} for each \texttt{GitHub} release \\
     & Funded and maintained by CERN and OpenAIRE for long term preservation \\
-    & At present, can only archive files embedded directly in the git repo, not produced by it as outputs\\
+    & At present, can only archive files embedded directly in the \texttt{git} repo, not produced by it as outputs\\
   \texttt{FigShare}: \smurl{figshare.com} & Builds data package based on \texttt{GitHub} release \\
     & Allows you to upload additional files, e.g. datasets built by code \\
     & Integrated with several journals, e.g. Nature family, \textsc{PNAS} \\
@@ -360,7 +296,7 @@ The key features of a \textsc{vdd} system that are already possible are a versio
 
   \begin{tabular}{p{3.5cm}p{3cm}p{7cm}}
   \hline
-   \textbf{\texttt{GitHub} repo} & \textbf{R package} & \textbf{Description} \\ \hline
+   \textbf{\texttt{GitHub} repo} & \textbf{\texttt{R} package} & \textbf{Description} \\ \hline
   \ghsmurl{dfalster/baad/} & \texttt{baad.data} & The \texttt{Biomass And Allometry Database} provides data on the size dimensions of plants for many species, compiled from multiple scientific papers \citep{Falster-2015}.\\
   \ghsmurl{traitecoevo/taxonlookup} & \texttt{taxonlookup} & \texttt{taxonlookup} provides a taxonomic lookup table for land plants \citep{Pennell-2015a}.\\
   \hline
@@ -387,9 +323,11 @@ The key features of a \textsc{vdd} system that are already possible are a versio
 \begin{figure}[!hb]
 \centering
 \includegraphics[width=\linewidth]{figures/Figure2.pdf}
-\caption{Overview of the different users and technologies involved in distributing versioned data via \texttt{datastorr}.}
+\caption{Overview of the different users and technologies involved in distributing a versioned dataset via \texttt{datastorr}.}
 \label{fig:technology_stack}
 \end{figure}
+
+
 \bibliography{refs}
 
 \end{document}
