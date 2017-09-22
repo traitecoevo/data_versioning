@@ -144,35 +144,6 @@ There is rapid current work on new implementations which will be faster computat
 % Add CKAN here?
 That said, the workflow we describe here currently works well with \texttt{git} and should work even more quickly with its future replacement.
 
-\subsection{Cloud platforms for storing and distributing version controlled data}
-
-There are many current platforms for storing and distributing versioned controlled data for low or no cost.  The website \texttt{GitHub} (\smurl{www.github.com}) is a commercial platform for hosting and interacting with \texttt{git} repositories. In practice, each dataset should be a separate \texttt{git} repository on \texttt{GitHub} (see Table \ref{tab:examples} for examples). Although mainly used for computer code, \texttt{GitHub} is now also being use to manage scientific data \citep{Perkel-2016}. Maintaining the version controlled data in the cloud has two main benefits: first, it provides a platform for multiple data contributors to sync their files and correspond about changes in the dataset, and second, it hosts a stream of data releases, thus acting as a central point for  the collection, curation, and distribution of the data.
-
-% Though this section I am losing track of the big picture here;
-% there's lots of discussion of the positive benefits of "Something"
-% but without knowing what it is, it's unlikely that these will stick.
-% I wonder if we should move the workflow description higher.
-
-% WKC: I agree. Not sure what to do with these two sections which are a bit of a tangent relative to our main point
-
-\subsection{Potential for collaboration: allowing for multiple data contributors}
-
-One of the greatest benefits of using \texttt{git} for development of open-source software has been the way it encourages contributions from multiple individuals working simultaneously, and even individuals from outside the initial group of project participants \citep{Rogers-2013}. This is enabled via the distributed and decentralised nature of \texttt{git} repositories. Multiple users can make changes to different parts of the code (or in our case data) and the \texttt{git} system will integrate these together (if that is possible),
-% We have constant drama at work because the different spreadsheet
-% writers we use across the platforms quote files inconsistently so
-% every save is a complete rewrite of the file.  It's totally
-% impossible to do any collaborative editing....
- or, when needed, flag where there are conflicts that need to be resolved. This makes collaboration easy. For open-source projects, external parties are also welcome to copy (in \texttt{git} speak ``clone'' or ``fork'') a repository, make their own modifications and send these back to the project maintainers to be reviewed and potentially included in the project. This process is called submitting a ``Pull request''. One of the potential advantages of moving the workflow for managing data onto \texttt{GitHub} is the potential for seamless collaboration and for receiving pull requests from contributors \citep{Perkel-2016}.
- % This section conflates git and github more than is useful.  It
- % might be worth setting up github as the explicit platform here or
- % dialing back the language a bit.  GitLab and bitbucket have their
- % own "merge request" feature (I think).  It's also github that makes
- % repositories _discoverable_ which is a requirement for getting
- % outside collaborators in.  Oddly the decentralised nature of git is
- % not actually that useful in the github model because github is so
- % strongly centralised.  Will and I did some true decentralised git
- % collaboration on a plane to nescent once with a bare git repo on a
- % thumb drive.
 
 \subsection{`Semantic' versioning}
 
@@ -263,6 +234,43 @@ The problem of tracking data through time and versions is likely to be widesprea
 Many of the key roadblocks preventing a switch from a static to a dynamic data world were technological: in the past it took great deal of money and expertise to set up a \textsc{vdd} system. The proliferation of cloud--based tools and open--source software have now reduced these roadblocks considerably.  We argue that by linking together the tools described above, researchers can now produce, curate, and distribute versioned data much more easily and cheaply than in the past.
 
 The key features of a \textsc{vdd} system that are already possible are a versioning system to communicate small and large changes to users, both point-and-click and code-based access to all versions, reliable distribution to many users, and stable, organized \textsc{doi}s.  Moreover, it is relatively easy to update and add new versions.  Technology is moving forward rapidly and so it is very likely that the particular tools we describe above will add features and be even easier to use.  But, nonetheless, workable systems are already possible.
+
+
+
+% potentially move to discussion? 
+\subsection{Cloud platforms for storing and distributing version controlled data}
+
+There are many current platforms for storing and distributing versioned controlled data for low or no cost.  The website \texttt{GitHub} (\smurl{www.github.com}) is a commercial platform for hosting and interacting with \texttt{git} repositories. In practice, each dataset should be a separate \texttt{git} repository on \texttt{GitHub} (see Table \ref{tab:examples} for examples). Although mainly used for computer code, \texttt{GitHub} is now also being use to manage scientific data \citep{Perkel-2016}. Maintaining the version controlled data in the cloud has two main benefits: first, it provides a platform for multiple data contributors to sync their files and correspond about changes in the dataset, and second, it hosts a stream of data releases, thus acting as a central point for  the collection, curation, and distribution of the data.
+
+% Though this section I am losing track of the big picture here;
+% there's lots of discussion of the positive benefits of "Something"
+% but without knowing what it is, it's unlikely that these will stick.
+% I wonder if we should move the workflow description higher.
+
+% WKC: I agree. Not sure what to do with these two sections which are a bit of a tangent relative to our main point
+
+% potentially move to discussion?
+\subsection{Potential for collaboration: allowing for multiple data contributors}
+
+One of the greatest benefits of using \texttt{git} for development of open-source software has been the way it encourages contributions from multiple individuals working simultaneously, and even individuals from outside the initial group of project participants \citep{Rogers-2013}. This is enabled via the distributed and decentralised nature of \texttt{git} repositories. Multiple users can make changes to different parts of the code (or in our case data) and the \texttt{git} system will integrate these together (if that is possible),
+% We have constant drama at work because the different spreadsheet
+% writers we use across the platforms quote files inconsistently so
+% every save is a complete rewrite of the file.  It's totally
+% impossible to do any collaborative editing....
+ or, when needed, flag where there are conflicts that need to be resolved. This makes collaboration easy. For open-source projects, external parties are also welcome to copy (in \texttt{git} speak ``clone'' or ``fork'') a repository, make their own modifications and send these back to the project maintainers to be reviewed and potentially included in the project. This process is called submitting a ``Pull request''. One of the potential advantages of moving the workflow for managing data onto \texttt{GitHub} is the potential for seamless collaboration and for receiving pull requests from contributors \citep{Perkel-2016}.
+ % This section conflates git and github more than is useful.  It
+ % might be worth setting up github as the explicit platform here or
+ % dialing back the language a bit.  GitLab and bitbucket have their
+ % own "merge request" feature (I think).  It's also github that makes
+ % repositories _discoverable_ which is a requirement for getting
+ % outside collaborators in.  Oddly the decentralised nature of git is
+ % not actually that useful in the github model because github is so
+ % strongly centralised.  Will and I did some true decentralised git
+ % collaboration on a plane to nescent once with a bare git repo on a
+ % thumb drive.
+
+
+
 
 
 \newpage
