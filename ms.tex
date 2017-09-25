@@ -129,9 +129,10 @@ To fully realize the benefits of a versioned data, the \textsc{vdd} system needs
 
 \subsection{Distributing data to different user needs}
 
-At current there are two classes of data users: those that  interact with the data via point and click downloading and those that use code-based interaction.  The system we describe allows for both types (Figure \ref{fig:technology_stack} and Table \ref{tab:user_requirements}).  \texttt{GitHub} has a feature called ``releases'' in which specific commits can be turned into a version for distribution (with associated version number).  Those releases can be downloaded directly by users via point-and-click, or accessed via the \texttt{GitHub} \textsc{api}.
-% I have no idea what this next sentence means.
-Releases can also be embedded into any kind of website that allows the data curator to facilitate discovery by more users and to provide context.  Releases can also be linked to digital object identifiers and code-based users via for example an \textsc{R} package.
+At current there are two classes of data users: those that  interact with the data via point and click downloading and those that use code-based interaction.  The system we describe allows for both types (Figure \ref{fig:technology_stack} and Table \ref{tab:user_requirements}).  \texttt{GitHub} has a feature called ``releases'' in which specific commits can be turned into a version for distribution (with associated version number).  Those releases can be downloaded directly by users via point-and-click, or accessed programmatically via the \texttt{GitHub} \textsc{api}.  This system also allows the curator to do internal work between releases and only \emph{release} the data to users when the revision represents a clear improvement on the previous release.  
+
+% I have no idea what this next sentence means.  WKC: cut
+%Releases can also be embedded into any kind of website that allows the data curator to facilitate discovery by more users and to provide context.  Releases can also be linked to digital object identifiers and code-based users via for example an \textsc{R} package.
 
 \subsection{\texttt{datastorr} and dataset-specific \texttt{R} packages}
 
@@ -139,35 +140,29 @@ A point-and-click workflow may create barriers for reproducibility \citep{Wilson
 
 For example, \texttt{datastorr} was used to build the package \texttt{baad.data} (\smurl{github.com/traitecoevo/baad.data}), which is an interface to the Biomass and Allometry Database (\textsc{BAAD}) \citep{Falster-2015} stored at \smurl{github.com/dfalster/baad}. \texttt{baad.data} consists of only a few simple functions, that were automatically generated (along with the associated help files) with \texttt{datastorr}. And importantly \texttt{baad.data} contains no actual data so is very quick to install and takes up virtually no space on the user's hard-drive.
 % Dan Noble - Next 5 lines: I found this part to be a bit difficult to grasp as you discuss how updated versions can "download the latest version”, but then in the same sentence discuss how this works seamlessly “offline”. You may want to discuss this in greater depth as I don’t see how this is possible.
-When the function \texttt{baad.data::baad\_data()} is called, the system will download the latest version; if there have not been any changes since the last time the function was called, it will simply retrieve the data from memory, making the system very efficient (and also allowing the system to work seamlessly if the computer is offline). If a researcher requires an older version of \textsc{BAAD}, specifying the version number of the data as an argument, e.g. \texttt{baad.data::baad\_data("1.0.1")} will retrieve it, without overwriting any other dataset versions they may have previously downloaded. This enables users to reproduce an analysis using a specific version of the data, even while new data is posted.
-
-Using \texttt{datastorr}, researchers can set up their own versioned database (and R package) simply by providing: 1) a \texttt{GitHub} repository name (e.g., ``traitecoevo/taxonlookup''); 2) a single file that will contain the versioned data (e.g., ``taxonlookup.csv''); 3) and the function used to load this into \texttt{R} (e.g., \texttt{read.csv()}). A tutorial explaining precisely how to set this up is available at \smurl{github.com/ropenscilabs/datastorr}.
-
-Then as the dataset grows over time, researchers update the \texttt{git} repo and create a \texttt{GitHub} release with a new version number (preferably
-using \href{http://semver.org/}{semantic versioning}). All the versions
-will be available to the user. 
+When the function \texttt{baad.data::baad\_data()} is called, the system will download the latest version; if there have not been any changes since the last time the function was called, it will simply retrieve the data from memory, making the system very efficient (and also allowing the system to work seamlessly if the computer is offline). If a researcher requires an older version of \textsc{BAAD}, specifying the version number of the data as an argument, e.g. \texttt{baad.data::baad\_data("1.0.1")} will retrieve it, without overwriting any other dataset versions they may have previously downloaded. This enables users to reproduce an analysis using a specific version of the data, even while new data is posted.  Users may also have several versions of the same database on their computer and unambiguously access the different versions with one simple function call. The dataset versions are cached between runs such that the data are accessed by name and version, so that after the first download of each version access to the data should be very fast.  
 
 % Something not mentioned; that the versions are cached between runs
 % so that the data are accessed by name/version (rather than by
 % homebrewing a local cache and manually doing a bunch of file name
 % mangling) and that all accesses after the first are very fast
+% WKC: I had a go at this--see above
+
+Using \texttt{datastorr}, researchers can set up their own versioned database (and R package) simply by providing: 1) a \texttt{GitHub} repository name (e.g., ``traitecoevo/taxonlookup''); 2) a single file that will contain the versioned data (e.g., ``taxonlookup.csv''); 3) and the function used to load this into \texttt{R} (e.g., \texttt{read.csv()}). A tutorial explaining precisely how to set this up is available at \smurl{github.com/ropenscilabs/datastorr}.
+
+Then as the dataset grows over time, researchers update the \texttt{git} repo and create a \texttt{GitHub} release with a new version number (preferably
+using \href{http://semver.org/}{semantic versioning}). All the releases are simultaneously
+available to the user by both point-and-click and programmatically. 
 
 We have created \texttt{datastorr} to make \textsc{vdd} easy to implement and manage for \texttt{R} users. And as we stated above, this has already been used to release a variety of datasets (Table \ref{tab:examples}).
 % Reword next senetnce
-However, we can imagine alternative methods for interacting with \texttt{GitHub} and building templates and adopting a \textsc{vdd} system does not critically depend on using \texttt{datastorr} or \texttt{GitHub}. We would love to see implementations in \texttt{Python} or other languages and using other cloud platforms for data distribution.
-
-% Karthik has started with rdrop2 again I think; I do think that is a reasonable low-entry way of distributing things
-
+However, we can imagine alternative methods for interacting with \texttt{GitHub} and building templates and adopting a \textsc{vdd} system.  The key is not the specific technology, but rather the concept of creating, maintaining, and distributing versioned data.  
 
 \section{Discussion}
 % General problem. An example of solution. Key features
 
 % The introduction talks at length about medium sized data and little about versioning but this section talks only about versioning
 % WKC: now intro is about versioning and data size issue discussion moved here, which I think is an improvement
-
-% I really think that something like CKAN (though it doesn't support
-% holding data if I remember correctly) could totally be a complete
-% solution to the sorts of issues that we have here.
 
 
 % Discuss Genbank or other large sites?
@@ -205,20 +200,18 @@ Systematically archiving data is a key part of good workflow \citep{Wilkinson-20
 % could update the repo to include different data trivially).  So what
 % is being added?  Our retrival system does not use the doi at all!
 
-% WKC: hmmmm not sure we've nailed this yet, but see
+% WKC: hmmmm not sure we've nailed this yet, see
 % https://github.com/traitecoevo/data_versioning/issues/10#issuecomment-317059819
 
 % subsection only temporary as not allowed by journal guidelines.
+% trick is to say something about how things are getting better rapidly, but not scare people away from doing this now.  
 \subsection{Future directions}
 
-Technology for data management and distribution is moving forward rapidly.  The workflow we describe above works well with current tools and should work even more quickly with its future replacement.  Here we highlight a few rapidly developing future tools that researchers should be aware of.
+Technology for data management and distribution is moving forward rapidly.  The workflow we describe above works well with current tools and should work even more quickly with its future replacement.  Here, we highlight a few rapidly developing future tools that researchers should be aware of.
 
 Because \texttt{git} was built for tracking changes in code, there are aspects of how it behaves that are not natural to apply to  data \cite{Perkel-2016}.  For example, because it tracks changes line-by-line rather than cell-by-cell, there are inefficiencies in how the software stores the changes.
-% Dan Noble: I think this is a pragmatic view, but I would have a tendency not to discuss how the tools you can use for a VDD approach are likely to be "replaced in the near future”. Of course, things change, but this will not entice the people you want the paper to appeal to to adopt this sort of approach. From my experience, some of the resistance to adopting this stuff comes from programs or repositories being “replaced” at such a high rate. They just don’t feel like its worth doing.
 There is rapid current work on new implementations which will be faster computationally, smaller in file size, flexible with respect to data structures, and thus allow for larger datasets to be versioned efficiently\citep{Fli, Dat}.
-% Add CKAN here?
-That said...
-% Add CKAN and Git-LFS, and say something useful about the future
+% Add CKAN, rdrop2 and Git-LFS, conceptually at least, and say something useful about the future
 
 Another area requiring attention is properly allocating credit to authors for these citations, and we hope that the large citation mapping services (\texttt{Web of Science} and \texttt{Google Scholar}) will adapt to the community standard once the research community settles on best archiving practices for versioned data.
 
@@ -261,7 +254,14 @@ Another area requiring attention is properly allocating credit to authors for th
 % the data into R without ending up with two working copies or doing
 % some nasty "git show" call.
 
+% I really think that something like CKAN (though it doesn't support
+% holding data if I remember correctly) could totally be a complete
+% solution to the sorts of issues that we have here.
 
+% Karthik has started with rdrop2 again I think; I do think that is a reasonable low-entry way of distributing things
+
+
+% Dan Noble: I think this is a pragmatic view, but I would have a tendency not to discuss how the tools you can use for a VDD approach are likely to be "replaced in the near future”. Of course, things change, but this will not entice the people you want the paper to appeal to to adopt this sort of approach. From my experience, some of the resistance to adopting this stuff comes from programs or repositories being “replaced” at such a high rate. They just don’t feel like its worth doing.
 
 \newpage
 
