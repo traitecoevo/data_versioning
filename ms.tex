@@ -153,13 +153,15 @@ Future technology changes
 A central feature of this concept is that the versioned data is maintained in the cloud. This has two main benefits: first, it provides a platform for multiple data contributors to sync their files and correspond about changes in the dataset, and second, it hosts a stream of data releases, thus acting as a central point for the collection, curation, and distribution of the data. The proliferation of cloud-based tools and open-source software have now reduced these roadblocks considerably. We argue that by linking together the tools described above, researchers can now produce, curate, and distribute versioned data much more easily and cheaply than in the past. Additionally, one of the greatest benefits of using a cloud-based tool for development of open-source software has been the way it encourages contributions from multiple individuals working simultaneously, and even individuals from outside the initial group of project participants \citep{Rogers-2013}. Multiple users can make changes to different parts of the code (or in our case, data) and the \texttt{git} system will integrate these together (if that is possible) or, when needed, flag where there are conflicts that need to be resolved. As a result adopting a \textsc{vdd} system has the added benefit of facilitating collaboration among research groups.
 
 
-While our first attempt \textsc{vdd} system, \texttt{datastorr} is currently being used, there remain several challenges that we anticipate will be overcome as both technology and scientific norms change. For example, because \texttt{git} was built for tracking changes in code, there are aspects of how it behaves that are not natural to apply to data \citep{Perkel-2016}. For example, because it tracks changes line-by-line rather than cell-by-cell, there are inefficiencies in how the software stores the changes. There is rapid current work on new implementations which will be faster computationally, smaller in file size, flexible with respect to data structures, and thus allow for larger datasets to be versioned efficiently \citep{Fli, Dat}. Another area requiring attention is properly allocating credit to authors for these citations, and we hope that the large citation mapping services (\texttt{Web of Science} and \texttt{Google Scholar}) will adapt to the community standard once the research community settles on best archiving practices for versioned data. Likewise, we are optimistic that our funding bodies, research institutions, and scientific colleagues will further recognize the value in adding to, improving, and curating existing datasets in addition to collecting new ones.
+While our first attempt \textsc{vdd} system, \texttt{datastorr} is currently being used, there remain several challenges that we anticipate will be overcome as both technology and scientific norms change. Another area requiring attention is properly allocating credit to authors for these citations, and we hope that the large citation mapping services (\texttt{Web of Science} and \texttt{Google Scholar}) will adapt to the community standard once the research community settles on best archiving practices for versioned data. Likewise, we are optimistic that our funding bodies, research institutions, and scientific colleagues will further recognize the value in adding to, improving, and curating existing datasets in addition to collecting new ones.
 
 (idea) Add CKAN, rdrop2 and Git-LFS, conceptually at least, and say something useful about the future
 
 Something about DOI: easy to integrate.
 
 (old) Systematically archiving data is a key part of good workflow \citep{Wilkinson-2016, Piwowar-2011, Whitlock-2011}, and tools for creating and archiving digital objects have seen rapid progress in recent years. At present, each version of the dataset can be automatically archived and assigned a \textsc{doi}, via several providers (Table \ref{tab:doi_minting}). Here we describe the particular integration of \texttt{GitHub} and \texttt{Zenodo}. It is useful to have the ability to either be specific---reference a particular version for the purposes of reproducibility or general--reference the entire project. \texttt{Zenodo} currently automatically supplies both ``concept'' and ``version'' \textsc{doi}'s to the commits associated with \texttt{GitHub} releases automatically \citep[Fig. \ref{fig:semantic} and ][]{Nielsen-2017}. This allows users to very precisely reference either generally or specifically, both of which may be appropriate in different situations.
+
+
 
 % I'm unclear on the precice benefits of dois here (and actually in
 % general to a point); some further clarification might be useful. So
@@ -195,6 +197,15 @@ Something about DOI: easy to integrate.
 % I really think that something like CKAN (though it doesn't support
 % holding data if I remember correctly) could totally be a complete
 % solution to the sorts of issues that we have here.
+
+
+\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+
+
+The design choices we made in datastorr represent only one of many possible ways to adopt a \textsc{vdd} system; we can imagine many alternative models for interacting with versioned data stored in the cloud. The key is not the specific technology, but rather the concept of creating, maintaining, and distributing versioned data.  Indeed, as with every technology the best available approach is certain to change: there are currently a number of promising technologies---CKAN, rdrop2 and Git-LFS---that may facilitate even better \textsc{vdd} systems in the future.  There is also rapid current work on new implementations which will make versioning systems faster computationally, smaller in file size, flexible with respect to data structures, and thus allow for larger datasets to be versioned efficiently \citep{Fli, Dat}. 
+
+In short, many of the key roadblocks preventing a switch from a static to a dynamic data world were technological: in the past, it took great deal of money and expertise to set up and maintain a \textsc{vdd} system, but now there are many platforms for storing and distributing versioned controlled data that are cheap and relatively easy to set up. 
+
 
 \section{Acknowledgements}
 We thank D Noble for comments on an earlier draft and C Boettiger for helpful discussions. DSF was funded by the Australian Research Council. MWP was funded by a NSERC Discovery Grant.
