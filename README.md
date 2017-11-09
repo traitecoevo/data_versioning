@@ -1,24 +1,29 @@
-# Thoughts towards a paper about the living data package
+# A paper about Versioned Data Delivery and the datastorr package
 
-To compile the paper we use [remake](https://github.com/traitecoevo/remake).  The easiest way to install remake is via [drat](https://github.com/eddelbuettel/drat):
+This repository contains code needed to reproduce the article:
+
+Falster DS, FitzJOhn RG, Pennell MW, Cornwell W (2017) **Versioned data: why it is needed and how it can be achieved (easily and cheaply)**. *In review.*
+
+## Instructions
+
+### Install relevant software
+
+All analyses were done in `R`. You need to [download this repository](https://github.com/traitecoevo/data_versioning/archive/master.zip), and then open an R session with working directory set to the root of the project.
+
+To compile the paper, we use the [remake](https://github.com/richfitz/remake) package for R. You can install remake using the `devtools` package (run `install.packages("devtools")` to install devtools if needed):
 
 ```r
-drat:::add("traitecoevo")
-install.packages("remake")
+devtools::install_github("richfitz/storr", dependencies=TRUE)
+devtools::install_github("richfitz/remake", dependencies=TRUE)
 ```
 
-(install drat itself with `install.packages("drat")`)
+Compiling the paper also requires a reasonably complete LaTeX installation (e.g. [MacTeX](https://tug.org/mactex/) for OSX or [MikTex](http://miktex.org/) for windows). The LaTeX compilation will depend on a few packages from CTAN, make sure to allow automatic package installation by your LaTeX distribution.
 
-Compilation requires a reasonably complete LaTeX installation (e.g. MacTeX).
+### Recreating the figures and paper
 
-We use the non-CRAN packages [callr](https://github.com/traitecoevo/callr).  This can be installed by remake:
-
-```r
-remake::install_missing_packages()
-```
-
-To compile everything, run
+To generate all figures, analyses, and manuscript (PDF, using LaTeX), simply do:
 
 ```r
 remake::make()
 ```
+
