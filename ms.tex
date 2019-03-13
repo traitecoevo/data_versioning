@@ -7,7 +7,7 @@
 % num-refs/alpha-refs: numeric/author-year citation and bibliography toggle
 
 %\documentclass[letterpaper]{oup-contemporary}
-\documentclass[a4paper,num-refs]{assets/oup-contemporary}
+\documentclass[a4paper,num-refs]{oup-contemporary}
 
 %%% Journal toggle; only specific options recognised.
 %%% (Only "gigascience" and "general" are implemented now. Support for other journals is planned.)
@@ -33,7 +33,9 @@ University of New South Wales, Sydney NSW 2052, Australia}
 \affil[3]{Department of Zoology and Biodiversity Research Centre, University of British Columbia, Vancouver B.C. V6T 1Z4, Canada}
 
 %%% Author Notes
-\authnote{\authfn{1}daniel.falster@unsw.edu.au}
+\authnote{\authfn{1}daniel.falster@unsw.edu.au, +61-2-93858431\\
+ORCID IDs. Daniel S Falster: 0000-0002-9814-092X, Matthew  W. Pennell: 0000-0002-2886-3970, William K. Cornwell: 0000-0003-4080-4073
+}
 
 %%% Paper category
 \papercat{Technical Note}
@@ -279,7 +281,9 @@ An important concern for any data delivery system is the stability and reliabili
 
 In the long term, scientists want their datasets, software, and papers to preserved and remain accessible. While our proposed system for data delivery does not guarantee long-term preservation, users can also choose to automatically archive data-versions released on \texttt{GitHub} version in one of several traditional data archives, with a DOI (Digital Object Identifier) minted for each release. Currently, both \texttt{Zenodo} and  \texttt{FigShare} each integrate with \texttt{GitHub} for archiving of material hosted there. Ideally, tools like \texttt{datastorr} would also be developed to pull versions from these archives too. 
 
-\section{Availability of source code and requirements}
+\section{Availability of Supporting Data}
+
+Snapshots of the code and example file are archived in the GigaScience GigaDB repository \cite{Falster-2019}.
 
 \begin{itemize}
 \item Project name:  \texttt{datastorr} 
@@ -289,10 +293,32 @@ In the long term, scientists want their datasets, software, and papers to preser
 \item License: MIT
 \end{itemize}
 
+\begin{itemize}
+\item Project name:  \texttt{datastorr example} 
+\item Project home page: \smurl{github.com/richfitz/datastorr.example}.
+\item Operating system(s): Platform independent
+\item Programming language: R
+\item License: MIT
+\end{itemize}
+
+\begin{itemize}
+\item Project name:  \texttt{taxonlookup} 
+\item Project home page: \smurl{github.com/traitecoevo/taxonlookup}.
+\item Operating system(s): Platform independent
+\item Programming language: R
+\item License: MIT
+\end{itemize}
+
 \section{Declarations}
 
 \subsection{List of abbreviations}
-API = An Application Programming Interface provides a set of protocols for exchanging information. DOI = Digital Object Identifier.
+API = An Application Programming Interface provides a set of protocols for exchanging information. 
+CKAN = Comprehensive Knowledge Archive Network.
+DOI = Digital Object Identifier.
+FAIR =  Findable, Accessible, Interoperable, Reusable.
+Gb =  Gigabyte.
+Mb =  Megabyte.
+OKFN = Open Knowledge International.
 
 \subsection{Ethical Approval}
 Not applicable.
@@ -304,7 +330,7 @@ The author(s) declare that they have no competing interests.
 
 \subsection{Funding}
 
-DSF was funded by the Australian Research Council. MWP was funded by a NSERC Discovery Grant.
+DSF was funded by the Australian Research Council (FT160100113). MWP was funded by a NSERC Discovery Grant (RGPIN-2017-04590).
 
 \subsection{Author's Contributions}
 RF developed the datastorr package. All authors discussed the concepts and wrote the paper. 

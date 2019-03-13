@@ -15,7 +15,7 @@
 % - Handles missing/empty logo files
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-\ProvidesClass{assets/oup-contemporary}[2017/06/28, v1.1]
+\ProvidesClass{oup-contemporary}[2017/06/28, v1.1]
 
 \newif\if@numrefs
 \newif\if@alpharefs
@@ -80,7 +80,7 @@
 
 \RequirePackage[noblocks]{authblk}
 
-\def\@ouplogo{assets/oup.pdf}
+\def\@ouplogo{oup.pdf}
 
 \def\@jname{Journal of X}
 \def\@jlogo{example-grid-100x100pt.png}
@@ -114,7 +114,7 @@
 \newcommand{\journal}[1]{%
   \ifstrequal{#1}{gigascience}{%
     \jname{GigaScience}%
-    \jlogo{assets/gigascience-logo.pdf}%
+    \jlogo{gigascience-logo.pdf}%
     \definecolor{jcolour}{RGB}{122,191,129}%
   }{}
   \ifstrequal{#1}{general}{%
@@ -418,7 +418,7 @@
 % References
 \if@numrefs
   \RequirePackage[numbers]{natbib}
-  \bibliographystyle{assets/vancouver-authoryear}
+  \bibliographystyle{vancouver-authoryear}
 \fi
 \if@alpharefs
     \RequirePackage{natbib}
