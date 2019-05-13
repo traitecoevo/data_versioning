@@ -2,7 +2,7 @@
 
 This repository contains code needed to reproduce the article:
 
-Falster DS, FitzJOhn RG, Pennell MW, Cornwell W (2019) **Datastorr: a workflow and package for delivering successive versions of 'evolving data' directly into R**. *GigagScience* 8: 1–8. doi: [10.1093/gigascience/giz035]( https://doi.org/10.1093/gigascience/giz035) 
+Falster DS, FitzJohn RG, Pennell MW, Cornwell W (2019) **Datastorr: a workflow and package for delivering successive versions of 'evolving data' directly into R**. *GigaScience* 8: 1–8. doi: [10.1093/gigascience/giz035]( https://doi.org/10.1093/gigascience/giz035) 
 
 and the preprint: 
 
