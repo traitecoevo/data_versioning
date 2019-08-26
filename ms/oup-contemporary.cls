@@ -15,7 +15,7 @@
 % - Handles missing/empty logo files
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-\ProvidesClass{oup-contemporary}[2017/06/28, v1.1]
+\ProvidesClass{ms/oup-contemporary}[2017/06/28, v1.1]
 
 \newif\if@numrefs
 \newif\if@alpharefs
@@ -418,7 +418,7 @@
 % References
 \if@numrefs
   \RequirePackage[numbers]{natbib}
-  \bibliographystyle{vancouver-authoryear}
+  \bibliographystyle{ms/vancouver-authoryear}
 \fi
 \if@alpharefs
     \RequirePackage{natbib}
