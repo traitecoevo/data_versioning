@@ -12,24 +12,11 @@ This repository contains code needed to reproduce the analysis in the above arti
 
 ## Instructions
 
-### Install relevant software
+All analyses were done in `R`. To reproduce this paper, run the code contained in the `analysis.R` file. 
 
-All analyses were done in `R`. You need to [download this repository](https://github.com/traitecoevo/data_versioning/archive/master.zip), and then open an R session with working directory set to the root of the project.
+If reproducing these results on your own machine, you must first install the required packages, listed under `Depends` in the `DESCRIPTION` file. 
 
-To compile the paper, we use the [remake](https://github.com/richfitz/remake) package for R. You can install remake using the `devtools` package (run `install.packages("devtools")` to install devtools if needed):
+Alternatively, you can use an interactive RStudio session to run the `analysis.R` file with the required software pre-installed. This session is hosted by binder and can be accessed by clicking on the following:
 
-```r
-devtools::install_github("richfitz/storr", dependencies=TRUE)
-devtools::install_github("richfitz/remake", dependencies=TRUE)
-```
-
-Compiling the paper also requires a reasonably complete LaTeX installation (e.g. [MacTeX](https://tug.org/mactex/) for OSX or [MikTex](http://miktex.org/) for windows). The LaTeX compilation will depend on a few packages from CTAN, make sure to allow automatic package installation by your LaTeX distribution.
-
-### Recreating the figures and paper
-
-To generate all figures, analyses, and manuscript (PDF, using LaTeX), simply do:
-
-```r
-remake::make()
-```
+[![Launch Rstudio Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/smwindecker/data_versioning/master?urlpath=rstudio)
 
