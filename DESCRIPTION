@@ -1,5 +1,5 @@
 Type: Compendium
-Package: Compendium
+Package: data_versioning
 Title: Datastorr: a workflow and package for delivering successive versions of 'evolving data' directly into R
 Version: 1.0.1
 Authors@R: c(
