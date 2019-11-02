@@ -24,7 +24,6 @@ To ensure long-term [computational reproducibility](https://www.britishecologica
 
 ## Material included in the repository include:
 
-- `R/`: directory containing functions used in analysis
 - `ms/`: directory containing manuscript in LaTeX and accompanying style files 
 - `figures/`: directory containing figures for the manuscript
 - `DESCRIPTION`: A machine-readable [compendium]() file containing key metadata and dependencies 
