@@ -3,4 +3,6 @@ versioned_data_template
 .Rhistory
 .DS_Store
 .remake/
-thoughts
+.Rproj.user
+*.Rproj
+*.log

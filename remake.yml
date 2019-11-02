@@ -1,4 +1,5 @@
 packages:
+  - tinytex
 
 sources:
   - R
@@ -6,7 +7,7 @@ sources:
 targets:
   all:
     depends:
-      - ms.pdf
+      - ms/manuscript.pdf
 
-  ms.pdf:
-    command: latex_build_clean("ms.tex", "refs.bib")
+  ms/manuscript.pdf:
+    command: pdflatex("ms/manuscript.tex")

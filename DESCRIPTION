@@ -1,0 +1,26 @@
+Type: Compendium
+Package: data_versioning
+Title: Datastorr: a workflow and package for delivering successive versions of 'evolving data' directly into R
+Version: 1.0.1
+Authors@R: c(
+    person(given = "Daniel",
+           family = "Falster", 
+           role = "aut",
+           email = "daniel.falster@unsw.edu.au",
+           comment = c(ORCID = "0000-0002-9814-092X")),
+    person(given = "Rich",
+           family = "FitzJohn", 
+           role = "aut"),
+    person(given = "Matt",
+           family = "Pennel", 
+           role = "aut"),
+    person(given = "William",
+           family = "Cornwell", 
+           role = "aut")
+    )
+Description: This repository contains code needed to reproduce the article: Falster DS, FitzJohn RG, Pennell MW, Cornwell WK (2019) Datastorr: a workflow and package for delivering successive versions of 'evolving data' directly into R. GigaScience 8: 1–8. doi: 10.1093/gigascience/giz035
+License: MIT + file LICENSE
+Depends: 
+    tinytex
+Encoding: UTF-8
+LazyData: true
